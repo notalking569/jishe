@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中草药星云图谱 - 古代中医药学</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #1a1f33 50%, #0f0c29 100%);
+            color: #fff;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .title {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #e94560;
+        }
+        
+        .back-button {
+            padding: 0.5rem 1rem;
+            background: rgba(233, 69, 96, 0.8);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .herbs-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            padding: 2rem;
+        }
+        
+        /* 星云背景 */
+        .nebula-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(64, 84, 178, 0.3) 0%, rgba(30, 40, 90, 0.1) 40%, rgba(26, 26, 46, 0) 70%);
+            z-index: 0;
+            opacity: 0.7;
+            animation: pulse 15s infinite alternate;
+            
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        /* 星云轨道 */
+        .orbit-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rotate 80s infinite linear;
+        }
+
+        .orbit:nth-child(odd) {
+            animation-direction: reverse;
+            animation-duration: 100s;
+        }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* 星云粒子 */
+        #particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            z-index: 2;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        /* 连线画布 */
+        #connections-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+        
+        .herb-item {
+            margin: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            z-index: 5; /* 确保在轨道和粒子之上 */
+        }
+        
+        .herb-item:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+        }
+        
+        .herb-name {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .herb-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            z-index: 100;
+            width: 200px;
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+        }
+        
+        .herb-tooltip-title {
+            color: #e94560;
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+            font-size: 16px;
+        }
+        
+        .herb-tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+        
+        .herb-tooltip-label {
+            color: #aaa;
+        }
+        
+        .control-panel {
+            width: 280px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            
+        }
+        
+        .control-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #0ff;
+        }
+        
+        .control-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .filter-container {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .filter-select option {
+            background: #1a1a2e;
+        }
+
+        .category-label {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        /* 药性对应的颜色 */
+        .property-寒 { background-color: #4286f4; }
+        .property-凉 { background-color: #41c7c7; }
+        .property-平 { background-color: #7fca9b; }
+        .property-温 { background-color: #f4a742; }
+        .property-热 { background-color: #e94560; }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .control-panel {
+                width: 100%;
+                max-height: 35vh;
+                overflow-y: auto;
+            }
+        }
+
+        .nav-panel.main {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 200, 255, 0.8); /* 调整为主色调蓝色 */
+            color: white; /* 文字颜色保持为白色 */
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border: 1px solid rgba(0, 200, 255, 0.6); /* 添加与背景相近的蓝色边框 */
+            box-shadow: 0 0 12px rgba(0, 200, 255, 0.6); /* 蓝色阴影 */
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-panel.main:hover {
+            background: rgba(0, 100, 255, 0.8); /* 鼠标悬停时背景颜色加深 */
+            box-shadow: 0 0 18px rgba(0, 150, 255, 0.8); /* 鼠标悬停时阴影加深 */
+            transform: scale(1.05); /* 鼠标悬停时稍微放大 */
+        }
+
+        .toggle-herbs {
+            position: absolute;
+            top: 1rem;
+            right: 6rem; /* 位于返回按钮左侧 */
+            background: rgba(233, 69, 96, 0.8); /* 不同于返回按钮的颜色 */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border: 1px solid rgba(233, 69, 96, 0.6);
+            box-shadow: 0 0 12px rgba(233, 69, 96, 0.6);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toggle-herbs:hover {
+            background: rgba(233, 100, 120, 0.8);
+            box-shadow: 0 0 18px rgba(233, 100, 120, 0.8);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-panel main" onclick="navigateTo('zcy')">
+            <span>返回</span>
+        </div>
+        <div class="toggle-herbs" id="toggle-herbs-btn" onclick="toggleHerbsData()">
+            <span>川派药材</span>
+        </div>
+
+        <div class="content">
+            <div class="herbs-container" id="herbs-container">
+                <!-- 星云背景 -->
+                <div class="nebula-background"></div>
+                <!-- 星云轨道 -->
+                <div class="orbit-container">
+                    <div class="orbit" style="width: 60%; height: 60%;"></div>
+                    <div class="orbit" style="width: 70%; height: 70%;"></div>
+                    <div class="orbit" style="width: 80%; height: 80%;"></div>
+                    <div class="orbit" style="width: 90%; height: 90%;"></div>
+                </div>
+                <!-- 星云粒子 -->
+                <div id="particles-container"></div>
+                <!-- 药材节点连线容器 -->
+                <canvas id="connections-canvas"></canvas>
+                <!-- 药材将由JavaScript动态生成 -->
+            </div>
+            
+            <div class="control-panel">
+                <div class="control-section">
+                    <h3 class="control-title">星云图说明</h3>
+                    <p>本图呈现《本草纲目》中的核心药材：</p>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #4286f4;"></div>
+                            <span>寒性药材</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #41c7c7;"></div>
+                            <span>凉性药材</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #7fca9b;"></div>
+                            <span>平性药材</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #f4a742;"></div>
+                            <span>温性药材</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #e94560;"></div>
+                            <span>热性药材</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3 class="control-title">可视化维度</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>圆圈大小：药用频率</li>
+                        <li>圆圈颜色：药性寒热程度</li>
+                        <li>位置分布：入药部位</li>
+                    </ul>
+                </div>
+                
+                <div class="control-section">
+                    <h3 class="control-title">药材筛选</h3>
+                    <div class="filter-container">
+                        <label for="property-filter">按药性筛选：</label>
+                        <select id="property-filter" class="filter-select">
+                            <option value="all">全部</option>
+                            <option value="寒">寒性</option>
+                            <option value="凉">凉性</option>
+                            <option value="平">平性</option>
+                            <option value="温">温性</option>
+                            <option value="热">热性</option>
+                        </select>
+                    </div>
+                    <div class="filter-container">
+                        <label for="category-filter">按入药部位：</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="all">全部</option>
+                            <option value="根部">根部</option>
+                            <option value="茎部">茎部</option>
+                            <option value="叶部">叶部</option>
+                            <option value="花部">花部</option>
+                            <option value="果实">果实</option>
+                            <option value="种子">种子</option>
+                            <option value="全草">全草</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="herb-tooltip" class="herb-tooltip">
+                <div class="herb-tooltip-title" id="tooltip-title"></div>
+                <div class="herb-tooltip-row">
+                    <span class="herb-tooltip-label">药性:</span>
+                    <span id="tooltip-property"></span>
+                </div>
+                <div class="herb-tooltip-row">
+                    <span class="herb-tooltip-label">药味:</span>
+                    <span id="tooltip-taste"></span>
+                </div>
+                <div class="herb-tooltip-row">
+                    <span class="herb-tooltip-label">归经:</span>
+                    <span id="tooltip-meridian"></span>
+                </div>
+                <div class="herb-tooltip-row">
+                    <span class="herb-tooltip-label">入药部位:</span>
+                    <span id="tooltip-category"></span>
+                </div>
+                <div class="herb-tooltip-row">
+                    <span class="herb-tooltip-label">功效:</span>
+                    <span id="tooltip-function"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量，标记当前是否显示四川药材
+        let isShowingSichuanHerbs = false;
+
+        // 切换药材数据的函数
+        function toggleHerbsData() {
+            // 切换状态
+            isShowingSichuanHerbs = !isShowingSichuanHerbs;
+            
+            // 更新按钮文字
+            const toggleBtn = document.getElementById('toggle-herbs-btn');
+            toggleBtn.querySelector('span').textContent = isShowingSichuanHerbs ? '全部药材' : '川派药材';
+            
+            // 更改按钮样式
+            if (isShowingSichuanHerbs) {
+                toggleBtn.style.background = 'rgba(66, 135, 245, 0.8)';
+                toggleBtn.style.borderColor = 'rgba(66, 135, 245, 0.6)';
+                toggleBtn.style.boxShadow = '0 0 12px rgba(66, 135, 245, 0.6)';
+            } else {
+                toggleBtn.style.background = 'rgba(233, 69, 96, 0.8)';
+                toggleBtn.style.borderColor = 'rgba(233, 69, 96, 0.6)';
+                toggleBtn.style.boxShadow = '0 0 12px rgba(233, 69, 96, 0.6)';
+            }
+            
+            // 清除当前药材
+            const container = document.getElementById('herbs-container');
+            const herbElements = document.querySelectorAll('.herb-item');
+            herbElements.forEach(herb => herb.remove());
+            
+            // 重新生成并显示新的药材
+            initializeHerbs();
+        }
+
+        // 提取初始化药材的部分为一个独立函数
+        function initializeHerbs() {
+            const herbs = generateHerbalData(isShowingSichuanHerbs);
+            const container = document.getElementById('herbs-container');
+            const tooltip = document.getElementById('herb-tooltip');
+            const tooltipTitle = document.getElementById('tooltip-title');
+            const tooltipProperty = document.getElementById('tooltip-property');
+            const tooltipTaste = document.getElementById('tooltip-taste');
+            const tooltipMeridian = document.getElementById('tooltip-meridian');
+            const tooltipCategory = document.getElementById('tooltip-category');
+            const tooltipFunction = document.getElementById('tooltip-function');
+            
+            // 移除当前可能存在的类别标签
+            document.querySelectorAll('.category-label').forEach(label => {
+                label.remove();
+            });
+            
+            // 计算各类别药材的位置
+            const categoryPositions = {
+                '根部': { top: '80%', left: '50%' },
+                '茎部': { top: '65%', left: '35%' },
+                '叶部': { top: '65%', left: '65%' },
+                '花部': { top: '35%', left: '65%' },
+                '果实': { top: '35%', left: '35%' },
+                '种子': { top: '20%', left: '50%' },
+                '全草': { top: '50%', left: '50%' }
+            };
+            
+            // 保存所有创建的药材元素
+            const herbElements = [];
+
+            // 创建药材元素
+            herbs.forEach(herb => {
+                // 计算元素位置和大小
+                const size = 20 + herb.frequency / 5; // 药用频率映射到元素大小
+                const position = categoryPositions[herb.category]; // 基于入药部位的位置
+                
+                // 添加位置偏移，使同一类别的药材不重叠
+                const offsetAngle = Math.random() * Math.PI * 2;
+                const offsetDistance = (Math.random() * 0.5 + 0.5) * 20; // 50% 到 100% 的基础偏移
+                const offsetX = Math.cos(offsetAngle) * offsetDistance;
+                const offsetY = Math.sin(offsetAngle) * offsetDistance;
+                
+                // 创建药材元素
+                const herbElement = document.createElement('div');
+                herbElement.className = `herb-item property-${herb.property}`;
+                herbElement.style.width = `${size}px`;
+                herbElement.style.height = `${size}px`;
+                
+                // 设置位置
+                const top = parseFloat(position.top) + offsetY;
+                const left = parseFloat(position.left) + offsetX;
+                herbElement.style.position = 'absolute';
+                herbElement.style.top = `calc(${top}% - ${size/2}px)`;
+                herbElement.style.left = `calc(${left}% - ${size/2}px)`;
+                
+                // 添加药材名称
+                const nameElement = document.createElement('div');
+                nameElement.className = 'herb-name';
+                nameElement.textContent = herb.name;
+                herbElement.appendChild(nameElement);
+                
+                // 添加数据属性，用于筛选和连线
+                herbElement.dataset.property = herb.property;
+                herbElement.dataset.category = herb.category;
+                herbElement.dataset.meridian = herb.meridian;
+                herbElement.dataset.taste = herb.taste;
+                
+                // 添加基础发光效果
+                createGlowEffect(herbElement, 0.5);
+                
+                // 添加鼠标悬停事件
+                herbElement.addEventListener('mouseover', function(e) {
+                    // 更新提示框内容
+                    tooltipTitle.textContent = herb.name;
+                    tooltipProperty.textContent = herb.property;
+                    tooltipTaste.textContent = herb.taste;
+                    tooltipMeridian.textContent = herb.meridian;
+                    tooltipCategory.textContent = herb.category;
+                    tooltipFunction.textContent = herb.function;
+                    
+                    // 显示提示框
+                    tooltip.style.opacity = '1';
+                    
+                    // 计算提示框位置
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+                    tooltip.style.top = (rect.top - tooltip.offsetHeight - 10) + 'px';
+                    tooltip.style.transform = 'translateX(-50%)';
+                    
+                    // 确保提示框不超出屏幕
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    if (tooltipRect.left < 10) {
+                        tooltip.style.left = '10px';
+                        tooltip.style.transform = 'none';
+                    } else if (tooltipRect.right > window.innerWidth - 10) {
+                        tooltip.style.left = 'auto';
+                        tooltip.style.right = '10px';
+                        tooltip.style.transform = 'none';
+                    }
+                    
+                    if (tooltipRect.top < 10) {
+                        tooltip.style.top = (rect.bottom + 10) + 'px';
+                    }
+                    
+                    // 增强发光效果
+                    createGlowEffect(this, 1.5);
+                    
+                    // 绘制连接线
+                    drawConnections(this);
+                });
+                
+                herbElement.addEventListener('mouseout', function() {
+                    tooltip.style.opacity = '0';
+                    
+                    // 恢复基础发光效果
+                    createGlowEffect(this, 0.5);
+                    
+                    // 一段时间后清除连接线
+                    setTimeout(() => {
+                        drawConnections();
+                    }, 300);
+                });
+                
+                container.appendChild(herbElement);
+                herbElements.push(herbElement);
+            });
+            
+            // 初始绘制基础连接线
+            setTimeout(() => {
+                drawConnections();
+            }, 500);
+        }
+
+        // 模拟药材数据
+        function generateHerbalData(isSichuanHerbs = false) {
+            if (isSichuanHerbs) {
+                return generateSichuanHerbalData();
+            } else {
+                return generateAllHerbalData();
+            }
+        }
+
+        // 全国药材数据
+        function generateAllHerbalData() {
+            const properties = ['温', '热', '寒', '凉', '平'];
+            const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
+            
+            const herbs = [];
+            const herbNames = [
+                '人参', '黄芪', '当归', '川芎', '白芍', '熟地黄', '何首乌', '党参', '白术', '茯苓',
+                '陈皮', '半夏', '砂仁', '枳实', '木香', '厚朴', '黄连', '黄芩', '黄柏', '栀子',
+                '桂皮', '干姜', '附子', '丁香', '肉桂', '艾叶', '薄荷', '柴胡', '香附', '紫苏',
+                '菊花', '金银花', '连翘', '板蓝根', '蝉蜕', '牛蒡子', '桔梗', '甘草', '大黄', '芒硝'
+            ];
+            
+            for (let i = 0; i < herbNames.length; i++) {
+                herbs.push({
+                    id: i,
+                    name: herbNames[i],
+                    frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
+                    property: properties[Math.floor(Math.random() * properties.length)], // 药性
+                    category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
+                    taste: ['甘', '苦', '辛', '酸', '咸'][Math.floor(Math.random() * 5)], // 药味
+                    meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
+                    function: ['补气', '活血', '清热', '祛风', '利水'][Math.floor(Math.random() * 5)] // 功效
+                });
+            }
+            
+            return herbs;
+        }
+
+        // 川派药材数据
+        function generateSichuanHerbalData() {
+            const properties = ['温', '热', '寒', '凉', '平'];
+            const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
+            
+            const herbs = [];
+            const herbNames = [
+                '川芎', '川贝母', '川乌', '川牛膝', '川楝子', '川椒', '川木香', '川芍药', '川麦冬', '川射干',
+                '川当归', '川黄柏', '川白芷', '川芩', '川朴', '川连', '川姜', '川苦楝', '川桂皮', '川贝',
+                '川艾', '川薄荷', '川芫花', '川厚朴', '川赤芍', '银杏叶', '天麻', '独活', '白芷', '杜仲',
+                '猪苓', '柴胡', '黄精', '桑白皮', '夏枯草', '玄参', '鸡血藤', '泽泻', '虎杖', '枸杞子'
+            ];
+            
+            for (let i = 0; i < herbNames.length; i++) {
+                herbs.push({
+                    id: i,
+                    name: herbNames[i],
+                    frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
+                    property: properties[Math.floor(Math.random() * properties.length)], // 药性
+                    category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
+                    taste: ['甘', '苦', '辛', '酸', '咸'][Math.floor(Math.random() * 5)], // 药味
+                    meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
+                    function: ['祛风湿', '清热解毒', '活血化瘀', '温通经络', '化痰止咳'][Math.floor(Math.random() * 5)] // 川派特色功效
+                });
+            }
+            
+            return herbs;
+        }
+
+        // 生成星云粒子
+        function generateParticles() {
+            const container = document.getElementById('particles-container');
+            const count = 100;
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 随机位置
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // 随机大小
+                const size = Math.random() * 2 + 1;
+                
+                // 随机延迟动画
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // 初始化连线画布
+        function initConnectionsCanvas() {
+            const canvas = document.getElementById('connections-canvas');
+            const container = document.getElementById('herbs-container');
+            
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            
+            window.addEventListener('resize', function() {
+                canvas.width = container.offsetWidth;
+                canvas.height = container.offsetHeight;
+                drawConnections();
+            });
+            
+            return canvas.getContext('2d');
+        }
+        
+        // 绘制连接线
+        function drawConnections(activeHerb = null) {
+            const canvas = document.getElementById('connections-canvas');
+            const ctx = canvas.getContext('2d');
+            const herbElements = document.querySelectorAll('.herb-item');
+            
+            // 清除画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 如果没有活跃的药材，则只绘制同类别药材之间的淡连线
+            if (!activeHerb) {
+                // 按类别分组
+                const categories = {};
+                
+                herbElements.forEach(herb => {
+                    const category = herb.dataset.category;
+                    if (!categories[category]) {
+                        categories[category] = [];
+                    }
+                    categories[category].push(herb);
+                });
+                
+                // 为每个类别绘制连线
+                Object.values(categories).forEach(herbs => {
+                    if (herbs.length > 1) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                        ctx.lineWidth = 0.5;
+                        
+                        for (let i = 0; i < herbs.length; i++) {
+                            const herb = herbs[i];
+                            const rect = herb.getBoundingClientRect();
+                            const containerRect = canvas.getBoundingClientRect();
+                            
+                            const x = rect.left - containerRect.left + rect.width / 2;
+                            const y = rect.top - containerRect.top + rect.height / 2;
+                            
+                            if (i === 0) {
+                                ctx.moveTo(x, y);
+                            } else {
+                                ctx.lineTo(x, y);
+                            }
+                        }
+                        
+                        ctx.closePath();
+                        ctx.stroke();
+                    }
+                });
+                
+                return;
+            }
+            
+            // 获取活跃药材的属性
+            const activeProperty = activeHerb.dataset.property;
+            const activeMeridian = activeHerb.dataset.meridian;
+            const activeTaste = activeHerb.dataset.taste;
+            
+            // 获取活跃药材的位置
+            const activeRect = activeHerb.getBoundingClientRect();
+            const containerRect = canvas.getBoundingClientRect();
+            const activeX = activeRect.left - containerRect.left + activeRect.width / 2;
+            const activeY = activeRect.top - containerRect.top + activeRect.height / 2;
+            
+            // 绘制连接线
+            herbElements.forEach(herb => {
+                if (herb === activeHerb) return;
+                
+                // 检查是否有共同属性
+                const isSameProperty = herb.dataset.property === activeProperty;
+                const isSameMeridian = herb.dataset.meridian === activeMeridian;
+                const isSameTaste = herb.dataset.taste === activeTaste;
+                
+                if (!(isSameProperty || isSameMeridian || isSameTaste)) return;
+                
+                // 获取药材的位置
+                const rect = herb.getBoundingClientRect();
+                const x = rect.left - containerRect.left + rect.width / 2;
+                const y = rect.top - containerRect.top + rect.height / 2;
+                
+                // 设置连线样式
+                ctx.beginPath();
+                
+                if (isSameProperty) {
+                    ctx.strokeStyle = 'rgba(233, 69, 96, 0.4)'; // 相同药性
+                } else if (isSameMeridian) {
+                    ctx.strokeStyle = 'rgba(69, 233, 188, 0.4)'; // 相同归经
+                } else {
+                    ctx.strokeStyle = 'rgba(69, 134, 233, 0.4)'; // 相同药味
+                }
+                
+                ctx.lineWidth = 1.5;
+                
+                // 绘制线条
+                ctx.moveTo(activeX, activeY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                
+                // 添加连线效果：沿线运动的粒子
+                const particleCount = 1; // 每条线上的粒子数量
+                for (let i = 0; i < particleCount; i++) {
+                    // 计算粒子位置
+                    const progress = Math.random();
+                    const particleX = activeX + (x - activeX) * progress;
+                    const particleY = activeY + (y - activeY) * progress;
+                    
+                    // 绘制粒子
+                    ctx.beginPath();
+                    ctx.fillStyle = ctx.strokeStyle;
+                    ctx.arc(particleX, particleY, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+
+        function navigateTo(module) {
+            switch(module) {
+                case 'zcy':
+                    window.location.href = '/zcy';  // 直接跳转路径
+                    break;
+                default:
+                    console.log('Unknown module:', module);
+            }
+        }
+
+        // 创建发光效果
+        function createGlowEffect(herbElement, intensity = 1) {
+            const property = herbElement.dataset.property;
+            let color;
+            
+            switch (property) {
+                case '寒': color = '#4286f4'; break;
+                case '凉': color = '#41c7c7'; break;
+                case '平': color = '#7fca9b'; break;
+                case '温': color = '#f4a742'; break;
+                case '热': color = '#e94560'; break;
+                default: color = '#ffffff';
+            }
+            
+            herbElement.style.boxShadow = `0 0 ${10 * intensity}px ${color}, 0 0 ${20 * intensity}px rgba(255, 255, 255, 0.3)`;
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 生成星云粒子
+            generateParticles();
+            
+            // 初始化连线画布
+            const ctx = initConnectionsCanvas();
+
+            // 初始化药材
+            initializeHerbs();
+            
+            // 添加粒子动画
+            function animateParticles() {
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach(particle => {
+                    // 微小位移
+                    const currentX = parseFloat(particle.style.left);
+                    const currentY = parseFloat(particle.style.top);
+                    
+                    const offsetX = (Math.random() - 0.5) * 0.2; // -0.1% 到 0.1% 的偏移
+                    const offsetY = (Math.random() - 0.5) * 0.2;
+                    
+                    particle.style.left = `${currentX + offsetX}%`;
+                    particle.style.top = `${currentY + offsetY}%`;
+                });
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            // 启动粒子动画
+            animateParticles();
+            
+            // 筛选功能
+            function applyFilters() {
+                const propertyFilter = document.getElementById('property-filter').value;
+                const categoryFilter = document.getElementById('category-filter').value;
+                
+                document.querySelectorAll('.herb-item').forEach(item => {
+                    const property = item.dataset.property;
+                    const category = item.dataset.category;
+                    
+                    let shouldShow = true;
+                    
+                    if (propertyFilter !== 'all' && property !== propertyFilter) {
+                        shouldShow = false;
+                    }
+                    
+                    if (categoryFilter !== 'all' && category !== categoryFilter) {
+                        shouldShow = false;
+                    }
+                    
+                    item.style.opacity = shouldShow ? '1' : '0.2';
+                    item.style.pointerEvents = shouldShow ? 'auto' : 'none';
+                });
+                
+                // 重新绘制连接线
+                drawConnections();
+            }
+            
+            // 添加过滤器事件监听
+            document.getElementById('property-filter').addEventListener('change', applyFilters);
+            document.getElementById('category-filter').addEventListener('change', applyFilters);
+        });
+    </script>
+</body>
+</html> 

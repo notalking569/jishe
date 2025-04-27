@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>望闻问切 - 古代中医药学</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/diagnostic.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">望闻问切 - 四诊法</h1>
+        </header>
+        <div class="nav-panel main" onclick="navigateTo('main')">
+            <span>返回首页</span>
+          </div>
+        <div class="content">
+            <div class="diagnostic-container">
+                <div class="diagnostic-square-container">
+                    <div class="diagnostic-square" data-type="望诊">
+                        <div class="square-icon">👁️</div>
+                        <h3 class="square-title">望诊</h3>
+                    </div>
+                    <div class="diagnostic-square" data-type="闻诊">
+                        <div class="square-icon">👃</div>
+                        <h3 class="square-title">闻诊</h3>
+                    </div>
+                    <div class="diagnostic-square" data-type="问诊">
+                        <div class="square-icon">💬</div>
+                        <h3 class="square-title">问诊</h3>
+                    </div>
+                    <div class="diagnostic-square" data-type="切诊">
+                        <div class="square-icon">👆</div>
+                        <h3 class="square-title">切诊</h3>
+                    </div>
+                </div>
+                
+                <div class="diagnostic-detail">
+                    <div class="diagnostic-detail-content" id="望诊-content">
+                        <h2>望诊 - 观察法</h2>
+                        <p>望诊是中医四诊法之一，通过观察病人的神色、形态、动作、舌象等来诊断疾病。</p>
+                        <div class="detail-section">
+                            <h3>望神</h3>
+                            <p>观察病人的精神状态、表情和情绪变化。神气充足表示正气旺盛，神气不足则表示正气虚弱。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h3>望形</h3>
+                            <p>观察病人的体形、姿态和动作，了解其体质和病情变化。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h3>望色</h3>
+                            <p>观察病人的面色、皮肤等，五色（青、赤、黄、白、黑）分别对应五脏（肝、心、脾、肺、肾）。</p>
+                        </div>
+                        <div class="detail-section">
+                            <h3>望舌</h3>
+                            <p>观察舌质和舌苔的变化，是诊断内脏疾病的重要方法。</p>
+                            <div class="tongue-diagram">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-detail-content" id="闻诊-content">
+                        <h2>闻诊 - 听嗅法</h2>
+                        <p>闻诊包括听声音和嗅气味两个方面，通过病人的声音、呼吸和体味等变化来判断疾病。</p>
+                        <div class="detail-section">
+                            <h3>听声音</h3>
+                            <p>包括言语声、呼吸声、咳嗽声等，不同的声音变化反映不同的病理状态。</p>
+                            <ul>
+                                <li>高声有力：多属实证</li>
+                                <li>低声无力：多属虚证</li>
+                                <li>喘促气粗：多属肺病</li>
+                                <li>声嘶失音：多为肺和喉部疾病</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h3>嗅气味</h3>
+                            <p>包括口气、体味、排泄物气味等，不同的气味变化也反映不同的病理状态。</p>
+                            <ul>
+                                <li>酸臭味：多属肝胆病证</li>
+                                <li>焦臭味：多属心火炽盛</li>
+                                <li>甜腻味：多属脾胃湿热</li>
+                                <li>腥臭味：多属肺热或肠胃疾病</li>
+                                <li>腐臭味：多属肾虚或下焦疾病</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-detail-content" id="问诊-content">
+                        <h2>问诊 - 询问法</h2>
+                        <p>问诊是通过向病人询问病情、症状、生活习惯等情况，以了解疾病发生、发展的过程及现状。</p>
+                        <div class="detail-section">
+                            <h3>问诊内容 - 十问法</h3>
+                            <ol>
+                                <li><strong>寒热：</strong>了解病人是否有发热、恶寒等症状</li>
+                                <li><strong>汗：</strong>询问出汗情况，包括自汗、盗汗等</li>
+                                <li><strong>头身：</strong>询问头痛、眩晕、身体疼痛等情况</li>
+                                <li><strong>二便：</strong>了解大小便的情况</li>
+                                <li><strong>饮食：</strong>询问食欲、口味和饮食习惯等</li>
+                                <li><strong>胸腹：</strong>询问胸闷、腹痛等胸腹部不适</li>
+                                <li><strong>耳目：</strong>了解听力、视力及其变化</li>
+                                <li><strong>睡眠：</strong>询问睡眠质量和时间</li>
+                                <li><strong>病史：</strong>了解既往疾病和治疗情况</li>
+                                <li><strong>生活史：</strong>询问工作、生活环境和习惯等</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-detail-content" id="切诊-content">
+                        <h2>切诊 - 触摸法</h2>
+                        <p>切诊主要包括脉诊和按诊两种方法，通过触摸来获取疾病信息。</p>
+                        <div class="detail-section">
+                            <h3>脉诊</h3>
+                            <p>通过在病人的寸口（桡动脉）部位触摸脉搏，了解脉象的变化来诊断疾病。</p>
+                            <div class="pulse-diagram">
+                            
+                            </div>
+                            <h4>基本脉象</h4>
+                            <ul>
+                                <li><strong>浮脉：</strong>轻取即得，重按反弱，多见于表证</li>
+                                <li><strong>沉脉：</strong>轻取不显，重按始得，多见于里证</li>
+                                <li><strong>迟脉：</strong>脉来缓慢，一息不足四至，多见于寒证</li>
+                                <li><strong>数脉：</strong>脉来较快，一息五至以上，多见于热证</li>
+                                <li><strong>虚脉：</strong>脉来软弱无力，多见于气血亏虚</li>
+                                <li><strong>实脉：</strong>脉来强劲有力，多见于邪气炽盛</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h3>按诊</h3>
+                            <p>通过手按、指压等方式触摸病人的身体部位，了解其反应和病理变化。</p>
+                            <ul>
+                                <li>触摸局部皮温，了解寒热</li>
+                                <li>按压腹部，了解腹内脏器变化</li>
+                                <li>触摸穴位，了解经络气血变化</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+                function navigateTo(module) {
+    switch(module) {
+      case 'main':
+        window.location.href = '/main';  // 直接跳转路径
+        break;
+      default:
+        console.log('Unknown module:', module);
+    }
+  }
+    </script>
+        <style>
+            .nav-panel.main {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(233, 69, 96, 0.8); /* 主色调红色 */
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 0 12px rgba(233, 69, 96, 0.6);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .nav-panel.main:hover {
+      box-shadow: 0 0 18px rgba(233, 69, 96, 0.9);
+      transform: scale(1.05);
+    }
+    
+            </style>
+    <script src="js/main.js"></script>
+    <script src="js/diagnostic.js"></script>
+</body>
+</html> 

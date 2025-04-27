@@ -1,0 +1,169 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    overflow: hidden;
+}
+
+.content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.diagnostic-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+}
+
+.diagnostic-square-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.diagnostic-square {
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.diagnostic-square::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e94560;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.diagnostic-square:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(233, 69, 96, 0.2);
+}
+
+.diagnostic-square:hover::before {
+    transform: scaleX(1);
+}
+
+.diagnostic-square.active {
+    background: rgba(233, 69, 96, 0.1);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+}
+
+.diagnostic-square.active::before {
+    transform: scaleX(1);
+}
+
+.square-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.diagnostic-square:hover .square-icon {
+    transform: scale(1.2);
+}
+
+.square-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.diagnostic-detail {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    overflow-y: auto;
+    position: relative;
+}
+
+.diagnostic-detail-content {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.diagnostic-detail-content.active {
+    display: block;
+}
+
+.detail-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-section h3 {
+    color: #e94560;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+}
+
+.detail-section h4 {
+    color: #f4a742;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.1rem;
+}
+
+.detail-section p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.detail-section ul, 
+.detail-section ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.detail-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.tongue-diagram,
+.pulse-diagram {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.tongue-diagram img,
+.pulse-diagram img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 
