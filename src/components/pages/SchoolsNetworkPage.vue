@@ -7,7 +7,7 @@
     <div class="organ-network" ref="organNetwork"></div>
     
     <!-- 导航栏 -->
-    <nav class="navbar">
+    <!-- <nav class="navbar">
       <ul class="nav-list">
         <li class="nav-item dropdown">
           <button @click="navigateTo('zangxiang')">巴蜀针灸学派</button>
@@ -21,7 +21,7 @@
             </div>
           </div>
         </li>
-        <li class="nav-item dropdown">
+         <li class="nav-item dropdown">
           <button @click="navigateTo('school_2')">巴蜀针灸学派</button>
           <div class="dropdown-menu">
             <div class="dropdown-section">
@@ -56,12 +56,12 @@
               <h3>李时珍</h3>
             </div>
           </div>
-        </li>
-      </ul>
-    </nav>
+        </li> -->
+      <!-- </ul>
+    </nav>  -->
 
     <div class="title">
-      <h1>巴蜀针灸学派</h1>
+      <h1>巴蜀历史名医</h1>
     </div>
 
     <!-- 图片轮播栏 -->
@@ -114,33 +114,33 @@ export default {
     const state = reactive({
       imgBoxList: [
     {
-      src: '/img/doctors/wutang.png',
-      text: '华佗',
-      description: '华佗，字元化，东汉末年著名医学家，擅长外科手术，发明了麻沸散。',
+      src: '/img/doctors/tangshenwei.jpg',
+      text: '唐慎微',
+      description: '四川崇州人，北宋著名医学家。其主要成就为编撰《经史证类备急本草》。该书规模巨大、内容详博、药物众多、方药并举，首创“方药对照”编写方法，集宋代以前中药学成就之大成，是研究中药学的重要历史文献，也是现存最早的内容完整的本草文献。',
       style: {}
     },
     {
-      src: '/img/doctors/lishizhen.png',
-      text: '李时珍',
-      description: '李时珍，字东璧，明代著名医学家，著有《本草纲目》，对中药学有重大贡献。',
+      src: '/img/doctors/yangzijian.jpg',
+      text: '杨子建',
+      description: '杨子建生卒年不详，北宋眉州青神（今四川青神）人。其所著《十产论》是中国妇产科医学史上第一部较详细的助产学专著，也是世界上第一部论述难产的著作，在医学史上具有重要地位。书中记述的异常胎位转位术，早于欧洲500年。',
       style: {}
     },
     {
-      src: '/img/doctors/liuwansu.png',
-      text: '刘完素',
-      description: '刘完素，字守真，金代著名医学家，著有《素问玄机原病式》，对中医理论有深入研究。',
+      src: '/img/doctors/zanyin.jpg',
+      text: '昝殷',
+      description: '约(797-860年)四川成都人，唐代著名妇产科学家，曾任成都医博士，著有《产宝》，对经、带、胎、产等疾病均有所论述，是我国尚能查到的第一部妇产科专书。',
       style: {}
     },
     {
-      src: '/img/doctors/zhangzi.png',
-      text: '张仲景',
-      description: '张仲景，字仲景，东汉末年著名医学家，著有《伤寒杂病论》，被誉为“医圣”。',
+      src: '/img/doctors/fuweng.jpg',
+      text: '涪翁',
+      description: '西汉末、东汉初，涪县(今绵阳市区)人，中医针灸鼻祖，蜀之医学先贤。著有《针经》、《诊脉法》，其中《针经》时中国学史上较早的针灸专书。',
       style: {}
     },
     {
-      src: '/img/doctors/wanglv.png',
-      text: '王履',
-      description: '王履，字安道，元代著名医学家，著有《医经溯洄集》，对中医理论有独特见解。',
+      src: '/img/doctors/guoyu.jpg',
+      text: '郭玉',
+      description: '公元1-2世纪、东汉，字通直，广汉郡(今四川新都县)人，是汉和帝时最负盛名的医学家。郭玉医术高明，医德高尚， 病者虽贫贱，亦必尽其心力诊治。年少时拜程高为师，“学方诊六征之计”、“阴阳不测之术”。其医术、医德和对针灸与诊法的贡献，为朝野所叹服。《后汉书》、《东观汉记》、《华阳国志》有传。',
       style: {}
     }
   ],

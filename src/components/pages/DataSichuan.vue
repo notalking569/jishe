@@ -1,10 +1,10 @@
 <template>
     <div class="page-container">
       <!-- 返回按钮 -->
-      <div class="navigation-buttons">
+      <!-- <div class="navigation-buttons">
         <button class="return-button" @click="goBack">返回川派页面</button>
       </div>
-      
+       -->
       <!-- 左边部分 -->
       <aside class="left-panel">
         <h3>巴蜀地区气候与地理</h3>
@@ -24,137 +24,146 @@
             <button @click="showImage('geography')">地理特点</button>
           </div>
         </div>
-  
-        <!-- 数据可视化图表 -->
-        <div class="charts">
-          <div id="climate-map" style="width: 100%; height: 200px;"></div> <!-- 地图组件 -->
-          <div id="constitution-pie-chart" style="width: 300px; height: 100px;"></div> <!-- 体质分类饼图 -->
-        </div>
       </aside>
-  
-      <!-- 右边部分 -->
-      <div class="right-panel">
-        <!-- 右上部分 -->
-        <div class="right-top">
-          <!-- 中间部分：交换了两部分的位置 -->
-          <section class="right-top-left">
-            <h3>四诊诊断与川人体质结合</h3>
-            <p>四诊法是中医诊断学的四个基本方法，分别是：望诊、闻诊、问诊和切诊。通过这四个诊断手段，可以深入了解川人体质。</p>
-            <div class="diagnosis-methods">
-              <button @click="toggleDiagnosis('望诊')">望诊</button>
-              <button @click="toggleDiagnosis('闻诊')">闻诊</button>
-              <button @click="toggleDiagnosis('问诊')">问诊</button>
-              <button @click="toggleDiagnosis('切诊')">切诊</button>
-            </div>
-  
-            <!-- 望诊具体图表 -->
-            <div v-if="currentDiagnosis === '望诊'" class="diagnosis-detail">
-              <h4>望诊结果</h4>
-              <div class="charts-container">
-                <div class="chart-item">
-                  <div id="face-color-chart" style="width: 100%; height: 250px;"></div>
-                  <p>面色分布</p>
-                </div>
-                <div class="chart-item">
-                  <div id="tongue-color-chart" style="width: 100%; height: 250px;"></div>
-                  <p>舌苔分布</p>
-                </div>
-                <div class="chart-item">
-                  <div id="body-type-chart" style="width: 100%; height: 250px;"></div>
-                  <p>体型分布</p>
-                </div>
-              </div>
-            </div>
-  
-            <!-- 闻诊具体图表 -->
-            <div v-if="currentDiagnosis === '闻诊'" class="diagnosis-detail">
-              <h4>闻诊结果</h4>
-              <div class="charts-container">
-                <div class="chart-item">
-                  <div id="voice-chart" style="width: 100%; height: 250px;"></div>
-                  <p>声音分布</p>
-                </div>
-                <div class="chart-item">
-                  <div id="body-odor-chart" style="width: 100%; height: 250px;"></div>
-                  <p>体味分布</p>
-                </div>
-              </div>
-            </div>
-  
-            <!-- 问诊具体图表 -->
-            <div v-if="currentDiagnosis === '问诊'" class="diagnosis-detail">
-              <h4>问诊结果</h4>
-              <div class="charts-container">
-                <div class="chart-item">
-                  <div id="diet-chart" style="width: 100%; height: 250px;"></div>
-                  <p>饮食偏好</p>
-                </div>
-                <div class="chart-item">
-                  <div id="living-habits-chart" style="width: 100%; height: 250px;"></div>
-                  <p>生活习惯</p>
-                </div>
-                <div class="chart-item">
-                  <div id="emotion-chart" style="width: 100%; height: 250px;"></div>
-                  <p>情绪状态</p>
-                </div>
-              </div>
-            </div>
-  
-            <!-- 切诊具体图表 -->
-            <div v-if="currentDiagnosis === '切诊'" class="diagnosis-detail">
-              <h4>切诊结果</h4>
-              <div class="charts-container">
-                <div class="chart-item">
-                  <div id="pulse-chart" style="width: 100%; height: 250px;"></div>
-                  <p>脉象分布</p>
-                </div>
-                <div class="chart-item">
-                  <div id="abdominal-chart" style="width: 100%; height: 250px;"></div>
-                  <p>腹部触诊</p>
-                </div>
-              </div>
-            </div>
-          </section>
-          
-          <!-- 右上部分：川人体质特点 -->
-          <section class="right-top-right">
-            <h3>川人体质特点</h3>
-            <p>川人常见的体质类型受到气候湿气、饮食偏好及情绪的多方面影响。常见的体质类型有湿气体质、气虚体质、血虚体质等。</p>
-            <div id="wordcloud" class="wordcloud-box fade-in-wordcloud"></div>
-          </section>
+  <!-- 右侧部分 -->
+  <div class="right-panel">
+      <!-- 上半部分 -->
+      <div class="right-top">
+        <!-- 按钮组 -->
+        <div class="case-buttons">
+          <button
+            v-for="(c, idx) in caseList"
+            :key="idx"
+            :class="{ active: selectedCase === idx }"
+            @click="selectCase(idx)"
+          >
+            {{ c.name }}
+          </button>
         </div>
-  
-        <!-- 右下部分 -->
-        <section class="right-bottom">
-          <h3>川人体质调理建议</h3>
-          <p>根据四诊结果，提供以下调理建议：</p>
-          <ul>
-            <li>饮食调理：减少辛辣、油腻食物的摄入，多吃健脾祛湿的食物，例如薏苡仁、赤小豆等。</li>
-            <li>生活习惯：避免长时间处于潮湿环境，适当进行户外活动，保持干燥。</li>
-            <li>情绪管理：保持良好的心态，避免因湿邪困脾导致的情绪低落，适当进行冥想等放松活动。</li>
-            <li>中医治疗：根据四诊结果，采用中药调理、针灸、推拿等中医治疗方法。</li>
-          </ul>
-          <!-- 饮食调理效果图 -->
-          <div id="diet-suggestion-chart" style="width: 100%; height: 300px;"></div>
-  
-          <!-- 底部四个饼图 -->
-          <div class="bottom-charts">
-            <div class="chart" id="chart1"></div>
-            <div class="chart" id="chart2"></div>
-            <div class="chart" id="chart3"></div>
-            <div class="chart" id="chart4"></div>
+        <!-- 走马灯 & 文本 -->
+        <div class="case-content">
+          <div class="carousel">
+            <button class="prev" @click="prevImage">‹</button>
+            <img
+              :src="caseImages[selectedCase][currentImageIndex]"
+              alt="案例图片"
+              style="width: 100%; height: 500px;"
+            />
+            <button class="next" @click="nextImage">›</button>
           </div>
-        </section>
+          <!-- 对应文字描述 -->
+          <div class="case-text">
+  <h4>{{ caseTitles[selectedCase][currentImageIndex] }}</h4>
+  <p>{{ caseDescriptions[selectedCase][currentImageIndex] }}</p>
+</div>
+
+        </div>
       </div>
+      
+      <div class="right-bottom">
+        <h3>川人体质调理建议</h3>
+        <p>根据古籍《素问·上古真天论》和《类经·藏象类》的记载，以及巴蜀地区名医的经验，以下是一些针对川人体质的调理建议：</p>
+        <ul>
+          <li>饮食调理：减少辛辣、油腻食物的摄入，多吃健脾祛湿的食物，例如薏苡仁、赤小豆等。遵循《素问》中“五谷为养，五果为助，五畜为益，五菜为充”的饮食原则。</li>
+          <li>生活习惯：避免长时间处于潮湿环境，适当进行户外活动，保持干燥。劳逸结合，保证充足的睡眠，避免过度劳累。</li>
+          <li>情绪管理：保持良好的心态，避免因湿邪困脾导致的情绪低落，适当进行冥想等放松活动。《素问》中提到“精神内守，恬惔虚无，志闲少欲”，有助于增强健康。</li>
+          <li>中医治疗：根据四诊结果，采用中药调理、针灸、推拿等中医治疗方法。《素问》中提到“能知七损八益，则二者可调”，强调了中医调理的重要性。</li>
+        </ul>
+      </div>
+    </div>
     </div>
   </template>
   
   <script setup>
   import { ref, onMounted, nextTick } from 'vue';
-  import * as echarts from 'echarts'; // 用于绘制图表
-  import 'echarts-wordcloud' // 引入词云插件
   import { useRouter } from 'vue-router';
-  
+
+const caseList = [
+  { name: '望诊' },
+  { name: '闻诊' },
+  { name: '问诊' },
+  { name: '切诊' },
+];
+
+// 每个案例的图片数组
+const caseImages = [
+[
+  '/img/sizhen/shexiang1.png',
+  '/img/sizhen/shexiang2.png',
+  '/img/sizhen/shexiang3.png'
+],
+[
+  '/img/sizhen/wenzhen1.png',
+  '/img/sizhen/wenzhen2.png',
+  '/img/sizhen/wenzhen3.png'
+],
+[
+  '/img/sizhen/ask1.png',
+  '/img/sizhen/ask2.png',
+  '/img/sizhen/ask3.png'
+],
+[
+  '/img/sizhen/qie1.png',
+  '/img/sizhen/qie2.png',
+  // '/img/sizhen/qie3.png'
+]
+];
+
+
+const caseTitles = [
+  ['舌苔厚腻（湿阻脾胃）', '舌质淡白（脾气虚弱）', '舌裂纹（津液不足）'],
+  ['口气腥臭（湿热郁滞）', '声音低沉（肺气虚弱）', '呼吸粘滞（痰湿阻肺）'],
+  ['食欲亢进（脾虚生湿）', '畏寒嗜睡（阳虚内寒）', '纳呆便溏（脾胃虚弱）'],
+  ['脉象沉细（气血两虚）', '脉弦滑（痰湿凝滞）', '脉数断续（阴虚火旺）']
+];
+
+const caseDescriptions = [
+  [
+    '舌体肥大，舌苔厚腻，提示脾运失健，湿浊内停，需健脾祛湿。饮食忌辛辣油腻，宜清淡健脾。适宜户外运动以助脾气升腾。',
+    '舌质淡白，边缘齿痕明显，舌面湿润，表明气血双虚、脾失健运，需益气养血，佐以温补脾阳之品。',
+    '舌中裂纹，干燥，苔色灰白，为津液不足、湿浊内留之象，需清养阴液，佐以化湿之法。'
+  ],
+  [
+    '口气腥臭，伴胃中湿热郁滞，提示脾胃热毒积滞，应以清热解毒、化湿理气为主。',
+    '声音低沉，气息微弱，说明肺脾气虚，宣发肃降无力，应补益肺脾、扶正祛邪。',
+    '呼吸黏滞带痰声，为痰湿困阻肺气，需健脾祛湿，理气化痰，恢复肺气宣通。'
+  ],
+  [
+    '食欲亢进但体倦乏力，为脾虚不运，湿邪内生，宜健脾渗湿，升清降浊。',
+    '畏寒喜暖，四肢冰冷，为阳虚寒盛之象，应温补脾肾，助阳气升发。',
+    '纳呆便溏，腹中痞满，为脾胃虚弱、运化失常，宜健脾和胃、化湿运脾。'
+  ],
+  [
+    '脉沉细而无力，属气血两虚兼内寒，宜补气养血，温阳散寒。',
+    '脉弦滑如珠滚，提示痰湿凝滞，气机阻滞，宜化痰祛湿，行气宽中。',
+    '脉数断续，阴虚火旺，津液亏耗，应养阴清热，兼益气养血。'
+  ]
+];
+
+
+
+const selectedCase = ref(0);
+const currentImageIndex = ref(0);
+
+// 切换案例
+function selectCase(idx) {
+  selectedCase.value = idx;
+  currentImageIndex.value = 0;
+}
+
+// 走马灯上一张
+function prevImage() {
+  const imgs = caseImages[selectedCase.value];
+  currentImageIndex.value =
+    (currentImageIndex.value - 1 + imgs.length) % imgs.length;
+}
+
+// 走马灯下一张
+function nextImage() {
+  const imgs = caseImages[selectedCase.value];
+  currentImageIndex.value =
+    (currentImageIndex.value + 1) % imgs.length;
+}
   const router = useRouter();
   const currentDiagnosis = ref('望诊'); // 默认显示望诊
   const diagnosisInfo = ref('');
@@ -178,537 +187,48 @@
   
     // 确保 DOM 元素已渲染
     await nextTick();
-  
-    // 初始化图表
-    initCharts();
   };
-  
-  // 初始化所有图表
-  const initCharts = () => {
-    if (currentDiagnosis.value === '望诊') {
-      initFaceColorChart();
-      initTongueColorChart();
-      initBodyTypeChart();
-    } else if (currentDiagnosis.value === '闻诊') {
-      initVoiceChart();
-      initBodyOdorChart();
-    } else if (currentDiagnosis.value === '问诊') {
-      initDietChart();
-      initLivingHabitsChart();
-      initEmotionChart();
-    } else if (currentDiagnosis.value === '切诊') {
-      initPulseChart();
-      initAbdominalChart();
-    }
-  };
-  
-  // 初始化单个图表
-  const initChart = (chartId, chartData) => {
-    if (!charts[chartId]) {
-      charts[chartId] = echarts.init(document.getElementById(chartId));
-    }
-    charts[chartId].setOption(chartData);
-  };
-  
-  // 初始化望诊图表
-  const initFaceColorChart = () => {
-    initChart('face-color-chart', {
-      title: {
-        text: '面色分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '黄晦', value: 30 },
-          { name: '红润', value: 70 }
-        ]
-      } ]
-    });
-  };
-  
-  const initTongueColorChart = () => {
-    initChart('tongue-color-chart', {
-      title: {
-        text: '舌苔分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '厚腻', value: 40 },
-          { name: '薄白', value: 60 }
-        ]
-      } ]
-    });
-  };
-  
-  const initBodyTypeChart = () => {
-    initChart('body-type-chart', {
-      title: {
-        text: '体型分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '肥胖', value: 25 },
-          { name: '匀称', value: 75 }
-        ]
-      } ]
-    });
-  };
-  
-  // 初始化闻诊图表
-  const initVoiceChart = () => {
-    initChart('voice-chart', {
-      title: {
-        text: '声音分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '低微', value: 30 },
-          { name: '洪亮', value: 70 }
-        ]
-      } ]
-    });
-  };
-  
-  const initBodyOdorChart = () => {
-    initChart('body-odor-chart', {
-      title: {
-        text: '体味分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '异味', value: 20 },
-          { name: '无异味', value: 80 }
-        ]
-      } ]
-    });
-  };
-  
-  // 初始化问诊图表
-  const initDietChart = () => {
-    initChart('diet-chart', {
-      title: {
-        text: '饮食偏好',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '辛辣', value: 60 },
-          { name: '清淡', value: 40 }
-        ]
-      } ]
-    });
-  };
-  
-  const initLivingHabitsChart = () => {
-    initChart('living-habits-chart', {
-      title: {
-        text: '生活习惯',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '潮湿环境', value: 30 },
-          { name: '干燥环境', value: 70 }
-        ]
-      } ]
-    });
-  };
-  
-  const initEmotionChart = () => {
-    initChart('emotion-chart', {
-      title: {
-        text: '情绪状态',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '急躁', value: 20 },
-          { name: '平和', value: 80 }
-        ]
-      } ]
-    });
-  };
-  
-  // 初始化切诊图表
-  const initPulseChart = () => {
-    initChart('pulse-chart', {
-      title: {
-        text: '脉象分布',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '滑数', value: 25 },
-          { name: '缓弱', value: 30 },
-          { name: '沉迟', value: 20 },
-          { name: '细数', value: 25 }
-        ]
-      } ]
-    });
-  };
-  
-  const initAbdominalChart = () => {
-    initChart('abdominal-chart', {
-      title: {
-        text: '腹部触诊',
-        left: 'center',
-        textStyle: { fontSize: 14, color: '#00eaff' }
-      },
-      tooltip: { trigger: 'item' },
-      series: [ {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { name: '胀满', value: 30 },
-          { name: '柔软', value: 70 }
-        ]
-      } ]
-    });
-  };
-  onMounted(() => {
-    const chart = echarts.init(document.getElementById('wordcloud'));
-    chart.setOption({
-      backgroundColor: 'transparent',
-      title: {
-        text: '川人体质关键词词云',
-        left: 'center',
-        textStyle: {
-          color: '#0ff',
-          fontSize: 18,
-        }
-      },
-      tooltip: {
-        show: true
-      },
-      series: [{
-        type: 'wordCloud',
-        shape: 'circle',
-        sizeRange: [16, 40],
-        rotationRange: [-30, 30],
-        gridSize: 6,
-        drawOutOfBound: false,
-        textStyle: {
-          fontFamily: '霞鹜文楷, 楷体',
-          fontWeight: 'bold',
-          color: function () {
-            const colors = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#f39c12', '#1abc9c'];
-            return colors[Math.floor(Math.random() * colors.length)];
-          },
-          shadowColor: '#000',
-          shadowBlur: 2
-        },
-        data: [
-          { name: '气虚', value: 120 },
-          { name: '湿气', value: 100 },
-          { name: '阴虚', value: 90 },
-          { name: '阳虚', value: 80 },
-          { name: '痰湿', value: 70 },
-          { name: '血虚', value: 60 },
-          { name: '湿热', value: 50 },
-          { name: '脾胃虚弱', value: 40 },
-          { name: '肾气不足', value: 30 },
-          { name: '肝郁', value: 20 }
-        ]
-      }]
-    });
-  });
-  // 页面加载时初始化图表
-  onMounted(() => {
-    initCharts();
-  });
-  
+
+
   const goBack = () => {
     router.go(-1);
   };
   </script>
-  
   <style scoped>
-  .page-container {
-    display: flex;
-    height: 100vh;
+  /* 全局重置与字体 */
+  @font-face {
+    font-family: Millik;
+    font-weight: 700;
+    src: url(/assets/font/Millik.c3f91cb.ttf) format("truetype");
+  }
+  * {
     margin: 0;
     padding: 0;
-    background-color: #121212;
-    color: #fff;
-    font-family: 'KaiTi', 'FangSong', serif;
-  }
-  
-  .left-panel {
-    width: 20%;
-    padding: 20px;
-    background-color: #1c1c1c;
     box-sizing: border-box;
-    border-right: 1px solid #00eaff;
-    border-radius: 10px 0 0 10px;
+    font-family: Millik, Arial, sans-serif;
   }
   
-  .right-panel {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .right-top {
-    flex: 3;
-    display: flex;
-    border-bottom: 1px solid #00eaff;
-    border-radius: 10px 10px 0 0;
-  }
-  
-  .right-top-left {
-    flex: 2;
-    padding: 20px;
-    background-color: #222;
-    border-right: 1px solid #00eaff;
-    border-radius: 10px 0 0 10px;
-  }
-  
-  .right-top-right {
-    flex: 1;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 0 10px 10px 0;
-  }
-  
-  .right-bottom {
-    flex: 1;
-    padding: 20px;
-    background-color: #222;
-    border-top: 1px solid #00eaff;
-    border-radius: 0 0 10px 10px;
-  }
-  
-  h3 {
-    color: #00eaff;
-    font-size: 1.6em;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 0.6em;
-  }
-  
-  .diagnosis-methods button {
-    padding: 12px 25px;
-    margin: 5px;
-    background-color: #1a1a1a;
-    color: #00eaff;
-    border: 1px solid #00eaff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .diagnosis-methods button:hover {
-    background-color: #00eaff;
-    color: #1c1c1c;
-  }
-  
-  .diagnosis-detail {
-    margin-top: 20px;
-  }
-  
-  .diagnosis-detail p {
-    font-size: 1.2em;
-    color: #ccc;
-  }
-  
-  .right-top, .right-bottom {
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-  }
-  
-  .right-top-left, .right-top-right {
-    border-radius: 10px;
-  }
-  
-  .right-bottom ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .right-bottom ul li {
-    font-size: 0.8em;
-    margin: 10px 0;
-  }
-  
-  .right-bottom ul li::before {
-    content: "✓ ";
-    color: #00eaff;
-  }
-  
-  /* 可适应小屏幕设备 */
-  @media (max-width: 768px) {
-    .page-container {
-      flex-direction: column;
-    }
-  
-    .left-panel, .right-panel {
-      width: 100%;
-    }
-  
-    .right-top {
-      flex-direction: column;
-    }
-  
-    .right-top-left, .right-top-right {
-      flex: 1;
-    }
-  }
-  
-  .climate-map {
-    max-width: 100%;
-    height: 200px;
-    margin-top: 6px;
-  }
-  
-  .info-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #111;
-    border: 2px solid #0ff;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  .image-container {
-    width: 100%;
-    max-width: 400px; /* 限制图片容器的最大宽度 */
-    margin-bottom: 20px;
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-  }
-  
-  .text-container {
-    width: 100%;
-    max-width: 600px; /* 限制文字容器的最大宽度 */
-    text-align: center;
-    color: #0ff;
-    font-size: 1.2em;
-    line-height: 1.6;
-  }
-  
-  .text-container p {
-    margin: 0;
-    padding: 0 20px;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .buttons button {
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #0ff;
-    background-color: #222;
-    border: 1px solid #0ff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .buttons button:hover {
-    background-color: #0ff;
-    color: #000;
-  }
-  
-  /* 底部四个饼图 */
-  .bottom-charts {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: #111;
-    border-top: 1px solid #00eaff;
-    border-radius: 10px;
-  }
-  
-  .chart {
-    width: 200px;
-    height: 200px;
-  }
-  .charts-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-  
-  .chart-item {
-    flex: 1;
-    margin: 0 10px;
-    text-align: center;
-  }
-  
-  .chart-item p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #00eaff;
-  }
-  .wordcloud-box{
-      background: #111;
-      height: 200px;
-      border: 1px dashed #0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  /* 页面整体布局 */
+  .page-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #121212;
+  color: #e0fdfa;
+  overflow: hidden;
+  border: 2px solid #0ff; /* 添加边框，颜色为 #0ff，宽度为 2px */
+  padding: 10px; /* 添加内边距，避免内容紧贴边界 */
+  box-sizing: border-box; /* 确保边框和内边距不会影响整体高度 */
+  align-items: stretch; /* 确保左右两部分高度一致 */
+}
+  /* 返回按钮区域 */
   .navigation-buttons {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
   }
-  
   .return-button {
     padding: 8px 16px;
     background-color: #0ff;
@@ -717,11 +237,226 @@
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  .return-button:hover {
+    background-color: rgba(0,255,255,0.7);
+    box-shadow: 0 0 10px rgba(0,255,255,0.5);
   }
   
-  .return-button:hover {
-    background-color: rgba(0, 255, 255, 0.7);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  .left-panel {
+  margin-top: 0%;
+  width: 20%;
+  height: 100%; /* 或者直接设置为 100% */
+  border-radius: 10px;
+  background-color: #1c1c1c;
+  border: 1px solid #0ff; /* 四个边都有边框 */
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* 模块之间垂直间距 */
+  box-sizing: border-box; /* 确保边框不会影响整体宽度 */
+}
+  .left-panel h3 {
+    font-size: 1.4em;
+    color: #0ff;
+    margin-bottom: 10px;
   }
-  </style>
+  
+  /* 气候地理 info-box */
+  .info-box {
+    background-color: #222;
+    border: 2px solid #0ff;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    margin-top: -40px;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .image-container {
+    text-align: center;
+
+  }
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,255,255,0.5);
+  }
+  .text-container {
+    color: #e0fdfa;
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .buttons button {
+    flex: 1;
+    padding: 10px;
+    background: #111;
+    color: #0ff;
+    border: 1px solid #0ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .buttons button:hover {
+    background: #0ff;
+    color: #111;
+  }
+  
+  /* 数据可视化图表 */
+  .charts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 图表之间垂直间距 */
+  }
+  #climate-map,
+  #constitution-pie-chart {
+    background: #111;
+    border: 1px solid #0ff;
+    border-radius: 8px;
+  }
+
+  .right-panel {
+  flex: 1;
+  height: 100%; /* 确保高度填满父容器 */
+  padding: 20px;
+  margin-left: 30px;
+  background: #222;
+  border: 1px solid #0ff;
+  border-radius: 8px;
+  padding: 16px;
+}
+  /* 按钮组 */
+  .case-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .case-buttons button {
+    flex: 1;
+    padding: 10px;
+    background: #111;
+    color: #0ff;
+    border: 1px solid #0ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .case-buttons button.active,
+  .case-buttons button:hover {
+    background: #0ff;
+    color: #111;
+  }
+
+  /* 走马灯 + 文本布局 */
+  .case-content {
+    display: flex;
+    gap: 20px;
+  }
+  .carousel {
+    position: relative;
+    /* left: 30%; */
+    width: 500px;
+    height: 500px;
+    background: #222;
+    border: 1px solid #0ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel img {
+    max-width: 500px;
+    min-height: 500px;
+    border-radius: 4px;
+  }
+  .carousel .prev,
+  .carousel .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #0ff;
+    border: none;
+    font-size: 1.5em;
+    padding: 0 8px;
+    cursor: pointer;
+  }
+  .carousel .prev { left: 5px; }
+  .carousel .next { right: 5px; }
+
+  .case-text {
+  flex: 1;
+  background: #222;
+  border: 1px solid #0ff;
+  border-radius: 8px;
+  padding: 20px;
+  color: #e0fdfa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.case-text h4 {
+  color: #00eaff;
+  font-size: 1.2em;
+}
+
+.case-text p {
+  font-size: 0.9em;
+  line-height: 1.8;
+}
+
+  .right-panel {
+    flex: 1;
+    padding: 20px;
+    background: #222;
+    border: 1px solid #0ff;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  
+/* 下半部分：川人体质调理建议 */
+.right-bottom {
+  background-color: #222;
+  border: 1px solid #0ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px; /* 与上半部分的间距 */
+}
+
+.right-bottom h3 {
+  font-size: 1.4em;
+  color: #0ff;
+  margin-bottom: 10px;
+}
+
+.right-bottom p {
+  font-size: 0.9em;
+  color: #e0fdfa;
+  margin-bottom: 10px;
+}
+
+.right-bottom ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.right-bottom ul li {
+  font-size: 0.8em;
+  color: #e0fdfa;
+  margin-bottom: 5px;
+}
+
+.right-bottom ul li::before {
+  content: "✓ ";
+  color: #0ff;
+}
+
+</style>
