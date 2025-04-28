@@ -19,14 +19,15 @@
   <!-- 左侧面板 -->
   <div class="left-panel tech-panel">
     <div class="panel-section tcm-origin">
-      <h3 class="tech-title">中医起源</h3>
+      <h3 class="tech-title">针灸历史</h3>
       <div class="tcm-content tech-content">
         <p>
-          中医学起源于中国古代的医疗实践，距今已有数千年历史。最早的医学著作《黄帝内经》约成书于战国至西汉时期，奠定了中医理论基础。
-        </p>
-        <p>
-          针灸作为中医的重要组成部分，通过刺激人体特定穴位来调节气血，平衡阴阳，治疗疾病。
-        </p>
+  针灸是中医学中一种古老而精妙的治疗手段，其历史可追溯至数千年前，最早的文献记载可见于《黄帝内经》，该书成书于战国至西汉时期，为针灸学的发展奠定了坚实的理论基础。
+</p>
+<p>
+  针灸通过在人体特定穴位施用针刺或灸法，以达到调节气血、平衡阴阳、促进经络通畅的目的，进而治疗各种疾病。这种治疗方法不仅在中国传统医学中占有重要地位，而且在全球范围内也得到了广泛的认可和应用。
+</p>
+
       </div>
     </div>
     
@@ -418,7 +419,7 @@ onMounted(() => {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 250px;
+    width: 350px;
     max-height: 80vh;
     overflow-y: auto;
     z-index: 900;
