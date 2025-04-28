@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
-    <header class="header">
-      <h1 class="title">望闻问切 - 四诊法</h1>
-      <button class="back-button" @click="goHome">返回首页</button>
+      <header class="header">
+      <h1 class="title">五行理论--四诊合参</h1>
       <button class="data-button" @click="goData">数据分析</button>
+      <button class="back-button" @click="goHome">返回首页</button>
     </header>
+  <div class="container">
+
 
     <div class="diagnostic-container">
       <div class="diagnostic-square-container">
@@ -137,14 +138,6 @@ const goData = () => {
   margin: auto; */
   padding: 20px;
 }
-/* .header { */
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0e1628;
-  border-bottom: 1px solid #1e2f45;
-
-} */
 .diagnostic-square-container {
   display: flex;
   gap: 20px;
@@ -385,14 +378,11 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(56, 189, 248, 0.8);
 }
-
 /* 返回按钮 */
 .back-button {
   background-color: transparent;
   color: #79c3f4;
   border: 1px solid #79c3f4;
-  position: relative;
-  left: 39%;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -402,12 +392,12 @@ a {
   background-color: rgba(121, 195, 244, 0.1);
   box-shadow: 0 0 6px #79c3f4;
 }
+
+/* 数据分析按钮 */
 .data-button {
   background-color: transparent;
   color: #79c3f4;
   border: 1px solid #79c3f4;
-  right: 8%;
-  position: relative;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -418,22 +408,35 @@ a {
   box-shadow: 0 0 6px #79c3f4;
 }
 
+/* 页面标题区域 */
 .header {
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   width: 100%;
-  background-color: #111;
-  border-bottom: 2px solid #0ff;
-  color: #0ff;
+  height: 60px;
+  background: linear-gradient(to right, #000000, #001111, #000000);
+  border-bottom: 2px solid #00ffff;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between; /* 修改为两端对齐 */
+  align-items: center;
+  padding: 0 20px; /* 添加内边距，避免内容紧贴边缘 */
 }
 
+/* 标题 */
 .title {
-  font-size: 2.5rem;
-  color: #0ff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: 'Microsoft YaHei', serif;
+  font-size: 30px;
+  color: #00ffff;
+  letter-spacing: 3px;
   margin: 0;
-} 
+  white-space: nowrap;
+}
+
 
 @keyframes fadeIn {
     from {

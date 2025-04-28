@@ -1,14 +1,19 @@
 <template>
   <div class="herb-dashboard">
-    <!-- 页面标题 -->
     <header class="dashboard-header">
-      <div class="title"><h1>中药数据可视化大屏</h1></div>
-      <button class="jump-button" @click="goToHerbal">星云图</button>
-      <div class="header-buttons">
-        <button class="data-switch-button" @click="goToSichuan">{{ dataSourceButtonText }}</button>
-        <button class="top-right-button" @click="router.push('/main')">返回首页</button>
-      </div>
-    </header>
+  <div class="left-buttons">
+    <button class="jump-button" @click="goToHerbal">星云图</button>
+    <button class="data-switch-button" @click="goToSichuan">{{ dataSourceButtonText }}</button>
+  </div>
+  <div class="title">
+    <h1>五行理论--中草药</h1>
+  </div>
+  <div class="right-buttons">
+    <button class="top-right-button" @click="router.push('/main')">返回首页</button>
+  </div>
+</header>
+
+
 
     <!-- 主体区域：三列布局 -->
     <div class="dashboard-main">
@@ -24,35 +29,8 @@
 
       <!-- 中间图表列 -->
       <section class="dashboard-column center">
-        <div class="chart-box large circle-pack-container">
-          <VueUiCirclePack :config="config" :dataset="currentData.circlePackData" class="circle-pack" />
-        </div>
-        <div class="table-box">
-          <table>
-            <thead>
-              <tr>
-                <th>类别（典籍）</th>
-                <th>数量</th>
-                <th>代表药</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in currentData.herbTypes" :key="index">
-                <td>{{ item.name }}</td>
-                <td>{{ item.value }}</td>
-                <td>{{ currentData.exampleDrugs[index] }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      
-      <!-- 右侧图表列 - 重新调整布局 -->
-      <section class="dashboard-column right-column">
-        <!-- 右侧图表容器，分为上下结构 -->
-        <div class="right-container">
-          <!-- 饼图部分 -->
-          <div class="charts-section">
+                  <!-- 饼图部分 -->
+                  <div class="charts-section">
             <div class="chart-panel">
               <div class="panel-title">归经分布</div>
               <div class="chart-content">
@@ -66,7 +44,33 @@
               </div>
             </div>
           </div>
-          
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>类别（典籍）</th>
+                <!-- <th>数量</th> -->
+                <th>代表药</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in currentData.herbTypes" :key="index">
+                <td>{{ item.name }}</td>
+                <!-- <td>{{ item.value }}</td> -->
+                <td>{{ currentData.exampleDrugs[index] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      
+      <!-- 右侧图表列 - 重新调整布局 -->
+      <section class="dashboard-column right-column">
+        <!-- 右侧图表容器，分为上下结构 -->
+        <div class="right-container">
+        <div class="chart-box large circle-pack-container">
+          <VueUiCirclePack :config="config" :dataset="currentData.circlePackData" class="circle-pack" />
+        </div>
           <!-- 词云部分 -->
           <div class="map-section">
             <div class="panel-title">产地分布</div>
@@ -314,167 +318,32 @@ const quotes = [
   '"药能愈病，亦能致病。" ——《本草备要》',
   '"用药如用兵，兵贵神速，药贵中病。" ——《本草纲目》'
 ];
-onMounted(() => {
-  //echarts.init(document.getElementById('partUsageChart')).setOption({ /* 柱状图数据 */ })
-  //echarts.init(document.getElementById('herbCategoryChart')).setOption({ /* 药科柱图 */ })
-  //echarts.init(document.getElementById('relationSunburst')).setOption({ /* 旭日图 */ })
-  //echarts.init(document.getElementById('propertyChart')).setOption({ /* 药性饼图 */ })
-  //echarts.init(document.getElementById('originWordCloud')).setOption({ /* wordCloud */ })
-  //echarts.init(document.getElementById('tastePieChart')).setOption({ /* 药味分布图 */ })
-})
 </script>
 
 <style scoped>
-/* 调整整体容器高度 */
+/* 大屏整体背景与字体 */
 .herb-dashboard {
-  background: #000c2b;
+  background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
   color: #fff;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  font-family: 'Microsoft YaHei', serif;
 }
-
 .dashboard-header {
-  text-align: center;
-  color: rgb(0, 0, 0);
-  padding: 10px;
-  width: 300vh;
-  border-bottom: 2px solid rgb(0, 0, 0);
-}
-
-.header-buttons {
-  display: flex;
-  gap: 10px;
-  position: absolute;
-  right: 20px;
-}
-.right-top-row {
-  display: flex;
-  gap: 10px;
+  position: relative;
   width: 100%;
-  height: 160px; /* 增加高度确保甜甜圈图表完全显示 */
-}
-
-.chart-box.half {
-  flex: 1;
-  border: none;
-  min-height: 160px;  /* 增加高度 */
-  max-height: 160px;  /* 设置固定高度 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible; /* 允许内容溢出，确保甜甜圈完整显示 */
-}
-
-.chart-box.full {
-  flex: 1;
-  width: 100%;
-  min-height: calc(100vh - 290px); /* 动态计算高度 */
-  max-height: calc(100vh - 290px); /* 限制最大高度 */
-}
-
-.dashboard-main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  gap: 10px;
-  padding: 10px;
-  height: calc(100vh - 70px);
+  height: 60px;
+  background: linear-gradient(to right, #000000, #001111, #000000);
+  border-bottom: 2px solid #00ffff;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
   overflow: hidden;
-}
-
-.dashboard-column {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0; /* 防止内容撑开 */
-  width: 30%; /* 固定宽度占比 */
-}
-
-.dashboard-column.center {
-  flex: 1.5; /* 左右是 1，中间加大为 1.5 或 2 */
-  width: 40%; /* 固定宽度占比 */
-  max-width: 40%; /* 限制最大宽度 */
-  min-width: 40%; /* 确保最小宽度一致 */
-}
-
-.chart-box {
-  flex: 1;
-  background: #111;
-  border: 1px solid #0ff;
-  border-radius: 4px;
-  overflow: hidden; /* 确保内容不溢出 */
-  position: relative; /* 为绝对定位做准备 */
-}
-
-.chart-box.large {
-  height: 320px;
-  min-height: 320px; /* 确保最小高度 */
-  max-height: 320px; /* 确保最大高度 */
-}
-
-.table-box {
-  flex: 1;
-  overflow: auto;
-  background: #111;
-  border: 1px solid #0ff;
-  padding: 5px 10px; /* 减小内边距 */
-  font-size: 11px; /* 稍微减小字体 */
-  max-height: calc(100vh - 410px);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #0ff;
-}
-table th, table td {
-  padding: 6px;
-  border-bottom: 1px solid #333;
-}
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  color: #0ff;
-  padding: 10px 20px;
-  border-bottom: 2px solid #0ff;
-  height: 60px; /* 固定高度 */
 }
-.top-right-button, .data-switch-button {
-  padding: 6px 12px;
-  font-size: 14px;
-  background-color: #0ff;
-  color: #000;
-  border: 1px solid rgba(0, 200, 255, 0.4);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.top-right-button:hover, .data-switch-button:hover {
-  background-color: rgba(0, 200, 255, 0.2);
-  box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
-  color: #0ff;
-}
-.jump-button {
-  background-color: #0ff;
-  color: #000;
-  border: none;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.jump-button:hover {
-  background-color: #00d8ff;
-}
-.chart-box.small {
-  width: 100%;
-  /* height: 40%; */
-}
+
 .title {
   position: absolute;
   left: 50%;
@@ -483,16 +352,160 @@ table th, table td {
 }
 
 .title h1 {
-  font-size: 28px;
-  color: #0ff;
+  font-family: 'Microsoft YaHei', serif;
+  font-size: 30px;
+  color: #00ffff;
+  letter-spacing: 3px;
   margin: 0;
+  white-space: nowrap;
 }
 
-.circle-pack-container {
-  height: 320px !important;
-  max-height: 320px !important;
-  min-height: 320px !important;
+.left-buttons {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.right-buttons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.jump-button, .data-switch-button, .top-right-button {
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.jump-button:hover, .data-switch-button:hover, .top-right-button:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+
+/* 主体区域 */
+.dashboard-main {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  gap: 10px;
+  height: calc(100vh - 90px);
+  overflow: hidden;
+}
+
+/* 三列布局 */
+.dashboard-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dashboard-column.center {
+  flex: 1.5;
+  min-width: 40%;
+  max-width: 40%;
+}
+
+.dashboard-column:not(.center) {
+  min-width: 30%;
+  max-width: 30%;
+}
+
+/* 卡片盒子样式 */
+.chart-box, .map-section, .chart-panel, .table-box {
+  background: #1a1a1a;
+  border: 1px solid #0ff;
+  border-radius: 8px;
+  margin-top: 4%;
+  overflow: hidden;
+}
+
+/* 大图表区尺寸 */
+.chart-box.large {
+  height: 320px;
+  min-height: 320px;
+  max-height: 320px;
+}
+
+/* 小图表区 */
+.chart-box.small {
   width: 100%;
+}
+
+/* 表格 */
+.table-box {
+  flex: 1;
+  padding: 10px;
+  font-size: 12px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #0ff;
+}
+
+table th, table td {
+  padding: 8px;
+  border-bottom: 1px solid #333;
+}
+
+/* 饼图区域 */
+.charts-section {
+  display: flex;
+  height: 400px;
+  gap: 10px;
+}
+
+.chart-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1a;
+  border: 1px solid #0ff;
+  border-radius: 8px;
+}
+
+/* 饼图标题 */
+.panel-title {
+  background: rgba(0, 255, 255, 0.08);
+  color: #0ff;
+  font-size: 16px;
+  padding: 6px 0;
+  text-align: center;
+  border-bottom: 1px solid #0ff;
+}
+
+/* 饼图内容 */
+.chart-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 朝代分布CirclePack */
+.circle-pack-container {
+  height: 320px;
+  max-height: 320px;
+  min-height: 320px;
+  background: #1a1a1a;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -500,186 +513,15 @@ table th, table td {
 }
 
 .circle-pack {
-  height: 320px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* 确保中间列的固定宽度不随内容变化 */
-.dashboard-column.center {
-  width: 40% !important;
-  max-width: 40% !important;
-  min-width: 40% !important;
-  flex: 1.5 0 auto !important;
-}
-
-/* 左右列的固定宽度 */
-.dashboard-column:not(.center) {
-  width: 30% !important;
-  max-width: 30% !important;
-  min-width: 30% !important;
-  flex: 1 0 auto !important;
-}
-
-/* 修复右侧列布局 */
-.dashboard-column:last-child {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dashboard-column:last-child .chart-box {
-  flex: 0 0 auto;
-  margin-bottom: 10px;
-}
-
-.dashboard-column:last-child .chart-box:first-child {
-  min-height: 180px; /* 给甜甜圈图表的容器增加高度 */
-  height: 180px;
-}
-
-.dashboard-column:last-child .chart-box.full {
-  flex: 1;
-  min-height: 200px;
-}
-
-/* 确保甜甜圈图表有足够空间 */
-.right-top-row .chart-box.half > * {
-  width: 100%;
-  height: 150px;
-  margin-top: 10px; /* 向下偏移，避免顶部被切断 */
-}
-
-/* 添加右侧新布局样式 */
-.donut-row {
-  display: flex;
-  width: 100%;
-  height: 180px; /* 减小高度 */
-  gap: 10px;
-  margin-bottom: 5px; /* 减小底部间距 */
-}
-
-.donut-box {
-  flex: 1;
-  background: #111;
-  border: 1px solid #0ff;
-  border-radius: 4px;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden; /* 防止内容溢出 */
-}
-
-.donut-title {
-  color: #0ff;
-  font-size: 12px;
-  margin: 0 0 2px 0; /* 减小底部间距 */
-  text-align: center;
-  line-height: 1;
-}
-
-/* 调整甜甜圈图表尺寸 */
-.donut-box > div {
-  width: 100%;
-  height: 150px; /* 稍微减小高度 */
-  transform: scale(0.9); /* 稍微缩小比例 */
-}
-
-/* 调整词云图高度 */
-.chart-box.full {
-  flex: 1;
-  width: 100%;
-  min-height: calc(100vh - 290px); /* 动态计算高度 */
-  max-height: calc(100vh - 290px); /* 限制最大高度 */
-}
-
-/* 确保图表容器的响应式布局 */
-@media screen and (max-height: 800px) {
-  .donut-row {
-    height: 160px;
-  }
-  
-  .donut-box > div {
-    height: 140px;
-    transform: scale(0.85);
-  }
-  
-  .table-box {
-    max-height: calc(100vh - 390px);
-  }
-  
-  .chart-box.full {
-    min-height: calc(100vh - 270px);
-    max-height: calc(100vh - 270px);
-  }
-}
-
-/* 修复原有的圆环重叠问题 */
-.right-column:last-child {
-  padding-bottom: 0; /* 防止底部溢出 */
-}
-
-/* 右侧面板的新布局 */
-.right-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.right-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 10px;
-}
-
-.charts-section {
-  display: flex;
-  width: 100%;
-  height: 260px;
-  gap: 10px;
-}
-
-.chart-panel {
-  flex: 1;
-  background: #111;
-  border: 1px solid #0ff;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.panel-title {
-  background: rgba(0, 255, 255, 0.1);
-  color: #0ff;
-  font-size: 14px;
-  padding: 4px 0;
-  text-align: center;
-  border-bottom: 1px solid #0ff;
-}
-
-.chart-content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-}
-
-.chart-content > div {
   width: 100%;
   height: 100%;
 }
 
+/* 地图词云区 */
 .map-section {
   flex: 1;
-  background: #111;
-  border: 1px solid #0ff;
-  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .map-content {
@@ -689,32 +531,26 @@ table th, table td {
   align-items: center;
 }
 
-/* 调整donut图表 */
-.donut-row, .donut-box {
-  display: none; /* 移除旧的donut容器 */
-}
-
-/* 禁用旧的可能冲突的样式 */
-.dashboard-column:last-child .chart-box:first-child,
-.dashboard-column:last-child .chart-box.full {
-  display: none; /* 移除旧的chart box */
-}
-
-/* 媒体查询适配不同屏幕高度 */
+/* 自适应小屏幕优化 */
 @media screen and (max-height: 800px) {
   .charts-section {
-    height: 230px;
+    height: 280px;
+  }
+  .circle-pack-container {
+    height: 260px;
   }
 }
 
 @media screen and (max-height: 700px) {
   .charts-section {
-    height: 210px;
+    height: 230px;
   }
-  
   .panel-title {
-    font-size: 12px;
-    padding: 2px 0;
+    font-size: 13px;
+  }
+  .circle-pack-container {
+    height: 240px;
   }
 }
+
 </style>

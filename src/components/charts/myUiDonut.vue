@@ -51,8 +51,8 @@ const config = ref({
             }
         },
         translations: {
-            total: 'Total',
-            average: 'Average'
+            total: '全部',
+            average: '平均'
         },
         table: {
             show: false,
@@ -80,7 +80,7 @@ const config = ref({
             chart: {
                 useGradient: true,
                 gradientIntensity: 40,
-                backgroundColor: '#111111ff',
+                backgroundColor: '#222222ff',
                 color: '#FFFFFFff',
                 layout: {
                     labels: {
@@ -116,7 +116,7 @@ const config = ref({
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
-                                text: 'Total',
+                                text: '全部',
                                 offsetY: 0,
                                 value: {
                                     color: '#FFFFFFff',
@@ -134,7 +134,7 @@ const config = ref({
                                 bold: false,
                                 fontSize: 18,
                                 color: '#FFFFFFff',
-                                text: 'Average',
+                                text: '平均',
                                 offsetY: 0,
                                 value: {
                                     color: '#FFFFFFff',
@@ -166,7 +166,7 @@ const config = ref({
                 legend: {
                     show: true,
                     bold: false,
-                    backgroundColor: '#111111ff',
+                    backgroundColor: '#22222ff',
                     color: '#FFFFFFff',
                     fontSize: 16,
                     roundingValue: 0,

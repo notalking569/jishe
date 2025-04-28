@@ -146,7 +146,7 @@
     cursor: pointer;
     z-index: 20;
     transition: all 0.3s ease;
-    margin-left: 8px;
+    /* margin-left: 1000px; */
   }
   .top-right-button:hover {
     background-color: rgba(0, 200, 255, 0.2);

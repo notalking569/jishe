@@ -1,20 +1,20 @@
 <template>
-  <div class="intro-page" ref="introPage">
+  <div class="intro-page" ref="introPage" @click="activateSystem">
     <div class="particle-container" ref="particleContainer"></div>
-    <div class="taiji-core" ref="taijiCore" @click="activateSystem"></div>
-    
+
     <div class="title-container">
       <h1 class="main-title" ref="mainTitle">五行医鉴</h1>
       <div class="binary-subtitle" ref="binarySubtitle">
-        基于中医经典的“两治疗一诊断”数据可视化探索
+        基于传统中医智慧与川派中医特色的数字化探索
       </div>
     </div>
-    
+
     <div class="five-elements-ring" ref="fiveElementsRing" v-show="showRing">
-      <button class="enter-button" @click="enterSystem">进入系统</button>
+      <button class="enter-button" @click.stop="enterSystem">进入系统</button>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -25,7 +25,7 @@ import { useRouter } from 'vue-router';
 // 引用元素
 const introPage = ref(null);
 const particleContainer = ref(null);
-const taijiCore = ref(null);
+// const taijiCore = ref(null);
 const mainTitle = ref(null);
 const binarySubtitle = ref(null);
 const fiveElementsRing = ref(null);
@@ -138,36 +138,34 @@ const animate = () => {
 
 // 激活五行能量环
 const activateSystem = () => {
-  showRing.value = true;
+  // 防止多次点击
+  if (showRing.value) return;
   
-  // 光轨重组动画
+  showRing.value = true;
+
+  // 粒子旋转重置动画
   gsap.to(particles.rotation, {
     duration: 1.5,
     x: 0,
     y: 0,
     ease: "power2.inOut"
   });
-  
-  // 粒子向中心聚集形成环状
+
+  // 粒子聚拢动画
   const positions = particles.geometry.attributes.position.array;
   const originalPositions = [...positions];
-  
+
   for (let i = 0; i < positions.length; i += 3) {
     const x = originalPositions[i];
     const y = originalPositions[i + 1];
     const z = originalPositions[i + 2];
-    
-    // 计算到原点的距离
-    const distance = Math.sqrt(x * x + y * y + z * z);
-    
-    // 计算新的环形位置
+
     const radius = 3;
     const angle = Math.random() * Math.PI * 2;
     const targetX = Math.cos(angle) * radius;
     const targetY = Math.sin(angle) * radius;
     const targetZ = (Math.random() - 0.5) * 0.5;
-    
-    // 动画
+
     gsap.to([positions], {
       duration: 2,
       [i]: targetX,
@@ -179,16 +177,6 @@ const activateSystem = () => {
       }
     });
   }
-  
-  // 太极核心光效
-  gsap.to(taijiCore.value, {
-    duration: 1,
-    boxShadow: "0 0 50px 20px rgba(0, 150, 255, 0.8)",
-    scale: 1.2,
-    ease: "elastic.out(1, 0.5)",
-    yoyo: true,
-    repeat: 1
-  });
 };
 
 // 进入系统

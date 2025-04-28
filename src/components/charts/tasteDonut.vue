@@ -80,7 +80,7 @@ const config = ref({
             chart: {
                 useGradient: true,
                 gradientIntensity: 40,
-                backgroundColor: '#111111ff',
+                backgroundColor: '#222222ff',
                 color: '#FFFFFFff',
                 layout: {
                     labels: {
@@ -115,7 +115,7 @@ const config = ref({
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
-                                text: 'Total',
+                                text: '全部',
                                 offsetY: 0,
                                 value: {
                                     color: '#FFFFFFff',
@@ -133,7 +133,7 @@ const config = ref({
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
-                                text: 'Average',
+                                text: '平均',
                                 offsetY: 0,
                                 value: {
                                     color: '#FFFFFFff',
@@ -152,7 +152,7 @@ const config = ref({
                         strokeWidth: 55,
                         borderWidth: 1,
                         useShadow: false,
-                        shadowColor: '#1A1A1A'
+                        shadowColor: '#222222'
                     }
                 },
                 comments: {
@@ -165,7 +165,7 @@ const config = ref({
                 legend: {
                     show: true,
                     bold: false,
-                    backgroundColor: '#111111ff',
+                    backgroundColor: '#222222ff',
                     color: '#FFFFFFff',
                     fontSize: 16,
                     roundingValue: 0,

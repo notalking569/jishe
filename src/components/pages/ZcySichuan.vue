@@ -1,13 +1,14 @@
 <template>
+        <header class="dashboard-header">
+  <div class="title">
+    <h1>川派"药食同源"</h1>
+  </div>
+  <div class="right-buttons">
+    <button class="top-right-button" @click="router.push('/main')">返回首页</button>
+  </div>
+</header>
     <div class="container">
-      <!-- 顶部导航 -->
-      <!-- <header>
-        <h1>川派中医药食同源特色</h1>
-        <div class="header-buttons">
-          <button class="top-right-button" @click="goBack">返回</button>
-        </div>
-      </header>
-       -->
+
       <!-- 上半部分 -->
       <div class="top-section">
         <div class="left-side">
@@ -609,19 +610,21 @@ header h1 {
 }
 
 button.top-right-button {
-  background-color: #0ff;
-  color: #000;
-  padding: 8px 16px;
-  border-radius: 4px;
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 14px;
   cursor: pointer;
-  border: none;
-  font-weight: bold;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 button.top-right-button:hover {
-  background-color: rgba(0, 255, 255, 0.7);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+  color: #ffffff;
 }
 
 .sidebar {
@@ -760,6 +763,69 @@ button.top-right-button:hover {
   height: 300px;
 }
 
+
+.dashboard-header {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(to right, #000000, #001111, #000000);
+  border-bottom: 2px solid #00ffff;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.title h1 {
+  font-family: 'Microsoft YaHei', serif;
+  font-size: 30px;
+  color: #00ffff;
+  letter-spacing: 3px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.left-buttons {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.right-buttons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.top-right-button {
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.jump-button:hover, .data-switch-button:hover, .top-right-button:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+  color: #ffffff;
+}
 
 .chart-description {
   /* 排版 */

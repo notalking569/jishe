@@ -16,7 +16,7 @@ const config = ref({
         customPalette: [],
         style: {
             fontFamily: 'inherit',
-            backgroundColor: '#000000ff',
+            backgroundColor: '#222222ff',
             animation: {
                 show: true,
                 animationFrames: 60

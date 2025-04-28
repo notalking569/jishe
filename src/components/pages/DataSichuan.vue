@@ -1,10 +1,15 @@
 <template>
+
+<header class="dashboard-header">
+  <div class="title">
+    <h1>川人体质分析</h1>
+  </div>
+    <button class="top-right-button" @click="router.push('/main')">返回首页</button>
+
+</header>
+
     <div class="page-container">
-      <!-- 返回按钮 -->
-      <!-- <div class="navigation-buttons">
-        <button class="return-button" @click="goBack">返回川派页面</button>
-      </div>
-       -->
+
       <!-- 左边部分 -->
       <aside class="left-panel">
         <h3>巴蜀地区气候与地理</h3>
@@ -66,10 +71,9 @@
         <ul>
           <li>饮食调理：减少辛辣、油腻食物的摄入，多吃健脾祛湿的食物，例如薏苡仁、赤小豆等。遵循《素问》中“五谷为养，五果为助，五畜为益，五菜为充”的饮食原则。</li>
           <li>生活习惯：避免长时间处于潮湿环境，适当进行户外活动，保持干燥。劳逸结合，保证充足的睡眠，避免过度劳累。</li>
-          <li>情绪管理：保持良好的心态，避免因湿邪困脾导致的情绪低落，适当进行冥想等放松活动。《素问》中提到“精神内守，恬惔虚无，志闲少欲”，有助于增强健康。</li>
-          <li>中医治疗：根据四诊结果，采用中药调理、针灸、推拿等中医治疗方法。《素问》中提到“能知七损八益，则二者可调”，强调了中医调理的重要性。</li>
-        </ul>
+                </ul>
       </div>
+
     </div>
     </div>
   </template>
@@ -206,12 +210,63 @@ function nextImage() {
     padding: 0;
     box-sizing: border-box;
     font-family: Millik, Arial, sans-serif;
-  }
-  
+  }.dashboard-header {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(to right, #000000, #001111, #000000);
+  border-bottom: 1px solid #00ffff;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.title h1 {
+  font-family: 'Microsoft YaHei', serif;
+  font-size: 30px;
+  color: #00ffff;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.header-buttons {
+  position: absolute;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.top-right-button {
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.top-right-button:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+  color: #ffffff;
+}
+
   /* 页面整体布局 */
   .page-container {
   display: flex;
-  height: 100vh;
+  height: 92vh;
   width: 100%;
   border-radius: 10px;
   background-color: #121212;
@@ -428,17 +483,18 @@ function nextImage() {
   border: 1px solid #0ff;
   border-radius: 8px;
   padding: 20px;
+  height: 130px;
   margin-top: 20px; /* 与上半部分的间距 */
 }
 
 .right-bottom h3 {
-  font-size: 1.4em;
+  font-size: 1em;
   color: #0ff;
   margin-bottom: 10px;
 }
 
 .right-bottom p {
-  font-size: 0.9em;
+  font-size: 0.5em;
   color: #e0fdfa;
   margin-bottom: 10px;
 }
@@ -449,7 +505,7 @@ function nextImage() {
 }
 
 .right-bottom ul li {
-  font-size: 0.8em;
+  font-size: 0.2em;
   color: #e0fdfa;
   margin-bottom: 5px;
 }

@@ -56,19 +56,19 @@ const config = ref({
         style: {
             fontFamily: 'inherit',
             chart: {
-                backgroundColor: '#FFFFFFff',
-                color: '#111111ff',
+                backgroundColor: '#222222',
+                color: '#222222ff',
                 // height: 800, // 增加高度
                 title: {
                     text: 'Title',
-                    color: '#111111ff',
+                    color: '#222222ff',
                     fontSize: 20,
                     bold: true,
                     textAlign: 'center',
                     paddingLeft: 0,
                     paddingRight: 0,
                     subtitle: {
-                        color: '#111111ff',
+                        color: '#222222ff',
                         text: 'Subtitle',
                         fontSize: 16,
                         bold: false

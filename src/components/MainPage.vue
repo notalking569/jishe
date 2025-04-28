@@ -3,6 +3,7 @@
     <!-- 背景粒子效果 -->
     <div class="particle-background" ref="particleBackground"></div>
     <div class="five-elements-timeline">
+      <h2>五行理论历史沿革</h2>
   <div v-for="(item, index) in fiveElementTimeline" :key="index" class="timeline-item">
     <div class="timeline-dot" :style="{ backgroundColor: item.color }"></div>
     <div class="timeline-content">
@@ -17,25 +18,6 @@
     </div>
   <!-- 四张中医相关图片（装饰图） -->
   <div class="top-banner">
-    <!-- <div class="banner-frame">
-        替换图片为图表容器 -->
-        <!-- <div id="flavorChart" style="width: 120px; height: 120px" ></div>
-        <div id="elementChart" style="width: 120px; height: 120px" ></div>
-        <div id="seasonChart" style="width: 120px; height: 120px" ></div>
-        <div id="organChart" style="width: 120px; height: 120px" ></div>
-        <div id="toneChart" style="width: 120px; height: 120px" ></div>
-      </div> -->
-<!-- 五行元素动画跳转按钮 -->
-<!-- 右上角：进入五行动画按钮 -->
-<button class="top-wuxing-button" @click="navigateTo('zangxiang')">
-  五行动画
-</button>
-<button class="top-jingyue-button" @click="navigateTo('diagnosis')">
-  景岳十问
-</button>
-<!-- <button class="top-test-button" @click="navigateTo('test')">
-  测试
-</button> -->
 
 
 </div>
@@ -49,9 +31,10 @@
 </button>
 <!-- 介绍文字区 -->
 <div class="section-intro">
-  <h2><span class="highlight-title">中医三宝，共筑岐黄大智</span></h2>
-  <p>中草药以植物之力调和阴阳，针灸疏通经络以助气血，望闻问切则从整体出发辨证论治。这三大体系共同构建了中医的智慧与实用，体现“未病先防，已病防变”的核心理念。</p>
+  <h2><span class="highlight-title">五行医鉴，川派智慧</span></h2>
+  <p>本项目以五行理论为纲，结合川派中医特色，通过数字化手段全景展现中草药、针灸、四诊法与流派传承，弘扬中医经典，探索巴蜀医道之源。</p>
 </div>
+
 
     <!-- 导航中枢 - 中央五行能量立方体 -->
     <div class="cube-container">
@@ -73,14 +56,24 @@
       <div class="right-panel">
               <!-- 中医名言滚动区域 -->
 <!-- 修改后 -->
-<div class="quote-marquee-right">
+<!-- <div class="quote-marquee-right">
 <h2>《黄帝内经·素问》</h2>
         <transition-group name="fade" tag="div" class="quote-list">
         <div v-for="(quote, index) in displayedQuotes" :key="index" class="quote-item">
           {{ quote }}
         </div>
       </transition-group>
+    </div> -->
+    <div class="five-elements-timeline-right">
+      <h2>川派中医历史进程</h2>
+  <div v-for="(item, index) in fiveElementTimeline_right" :key="index" class="timeline-item-right">
+    <div class="timeline-dot-right" :style="{ backgroundColor: item.color }"></div>
+    <div class="timeline-content-right">
+      <h4>{{ item.period }}</h4>
+      <p>{{ item.content }}</p>
     </div>
+  </div>
+</div>
     </div>
 
     </div>
@@ -97,25 +90,12 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import * as echarts from 'echarts';
-import 'echarts-wordcloud'; // 导入词云扩展
 import { useRouter } from 'vue-router';
 const activeImage = ref(null)
 
-const showImage = (src) => {
-  activeImage.value = src
-}
-
-const closeImage = () => {
-  activeImage.value = null
-}
 // 引用元素
 const cube = ref(null);
-const herbsChart = ref(null);
-const wordcloudContainer = ref(null);
 const particleBackground = ref(null);
-const schoolsChart = ref(null);
-const herbsRadarChart = ref(null);
 const router = useRouter(); // 获取路由实例
 
 // 立方体动画相关变量
@@ -127,9 +107,7 @@ let rotateInterval;
 // 背景粒子系统相关变量
 let bgScene, bgCamera, bgRenderer, bgParticles;
 let bgAnimationFrameId = null;
-const goToHerbalPage = () => {
-  window.location.href = '/herbal.html';
-};
+
 const fiveElementTimeline = ref([
   {
     period: '战国时期',
@@ -158,10 +136,38 @@ const fiveElementTimeline = ref([
   }
 ])
 
+const fiveElementTimeline_right = ref([
+  {
+    period: '战国至秦汉时期',
+    content: '四川成为中医知识的接受者，秦国统一四川并通过官府传播中医学知识，四川中医开始萌芽',
+    color: '#66cc66' // 木：生发之始
+  },
+  {
+    period: '东汉至三国时期',
+    content: '四川医学逐渐发展，涪翁、程高等医家推动针灸与脉学的传承，四川中医学逐步成熟。',
+    color: '#ff6666' // 火：融合之盛
+  },
+  {
+    period: '唐代至宋代',
+    content: '道医成为四川医学的重要力量，五运六气理论传入，四川本草学得到进一步发展。',
+    color: '#cccc66' // 土：内外兼顾
+  },
+  {
+    period: '宋代至明清时期',
+    content: '四川中医学逐渐走向成熟，医学理论体系不断完善，四川的医学影响力逐渐扩大',
+    color: '#cccccc' // 金：精炼升华
+  },
+  {
+  period: '明清',
+  content: '四川中医进入扩展成熟期，医学理论体系得到完善，四川的医学影响力逐渐扩大。',
+  color: '#66cccc' // 水：沉静而深远
+}
 
-const goToPulsePage = () => {
-  window.location.href = '/pulse.html';
-};
+])
+
+
+
+
 const famousQuotes = [
   // 金 - 肺
   "肺之合皮也，其荣毛也，其主心也。", // 《五藏生成篇第十》
@@ -466,198 +472,8 @@ const handleTouchEnd = (e) => {
   isDragging = false;
 };
 
-// 初始化本草药材图表
-const initHerbsChart = () => {
-  const chart = echarts.init(herbsChart.value);
-  
-  // 历史朝代数据
-  const dynasties = ['战国', '秦汉', '三国', '晋', '南北朝', '隋唐', '宋', '元', '明', '清', '民国'];
-  
-  // 模拟药材数量数据
-  const herbsCount = [365, 720, 850, 920, 1100, 1500, 1800, 2200, 3000, 3500, 4000];
-  
-  const option = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    textStyle: {
-      color: 'rgba(0, 200, 255, 0.8)'
-    },
-    grid: {
-      left: '5%',
-      right: '5%',
-      top: '10%',
-      bottom: '15%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      data: dynasties,
-      axisLine: {
-        lineStyle: {
-          color: 'rgba(0, 200, 255, 0.5)'
-        }
-      },
-      axisLabel: {
-        rotate: 45,
-        color: 'rgba(0, 200, 255, 0.8)'
-      }
-    },
-    yAxis: {
-      type: 'value',
-      name: '药材数量',
-      nameTextStyle: {
-        color: 'rgba(0, 200, 255, 0.8)'
-      },
-      axisLine: {
-        lineStyle: {
-          color: 'rgba(0, 200, 255, 0.5)'
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          color: 'rgba(0, 200, 255, 0.1)'
-        }
-      },
-      axisLabel: {
-        color: 'rgba(0, 200, 255, 0.8)'
-      }
-    },
-    series: [
-      {
-        data: herbsCount,
-        type: 'line',
-        smooth: true,
-        symbol: 'circle',
-        symbolSize: 12,
-        itemStyle: {
-          color: '#00BFFF'
-        },
-        lineStyle: {
-          width: 3,
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [
-              { offset: 0, color: '#00BFFF' },
-              { offset: 1, color: '#7FFFD4' }
-            ]
-          }
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: 'rgba(0, 191, 255, 0.5)' },
-              { offset: 1, color: 'rgba(0, 191, 255, 0)' }
-            ]
-          }
-        }
-      }
-    ],
-    tooltip: {
-      trigger: 'axis',
-      formatter: '{b}: {c} 种药材',
-      backgroundColor: 'rgba(0, 15, 50, 0.7)',
-      borderColor: 'rgba(0, 200, 255, 0.5)',
-      textStyle: {
-        color: 'rgba(0, 200, 255, 1)'
-      }
-    },
-    animation: true,
-    animationDuration: 2000,
-    animationEasing: 'cubicOut'
-  };
-  
-  chart.setOption(option);
-  
-  // 响应窗口大小变化
-  window.addEventListener('resize', () => {
-    chart.resize();
-  });
-};
 
-// 初始化词云
-const initWordCloud = () => {
-  const chart = echarts.init(wordcloudContainer.value);
-  
-  // 模拟《黄帝内经》高频术语数据
-  const data = [
-    { name: '阴阳', value: 150 },
-    { name: '五行', value: 120 },
-    { name: '气血', value: 100 },
-    { name: '经络', value: 90 },
-    { name: '脏腑', value: 85 },
-    { name: '津液', value: 80 },
-    { name: '寒热', value: 75 },
-    { name: '表里', value: 70 },
-    { name: '虚实', value: 65 },
-    { name: '气机', value: 60 },
-    { name: '神明', value: 55 },
-    { name: '脉象', value: 50 },
-    { name: '生化', value: 45 },
-    { name: '营卫', value: 40 },
-    { name: '藏象', value: 35 },
-    { name: '精气', value: 30 },
-    { name: '精神', value: 25 },
-    { name: '元气', value: 20 },
-    { name: '病机', value: 18 },
-    { name: '阴阳平衡', value: 15 }
-  ];
-  
-  const option = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    series: [{
-      type: 'wordCloud',
-      shape: 'circle',
-      left: 'center',
-      top: 'center',
-      width: '90%',
-      height: '90%',
-      right: null,
-      bottom: null,
-      sizeRange: [14, 60],
-      rotationRange: [-45, 45],
-      rotationStep: 15,
-      gridSize: 8,
-      drawOutOfBound: false,
-      textStyle: {
-        fontFamily: 'FangSong, SimSun, serif',
-        fontWeight: 'bold',
-        color: function () {
-          // 随机生成蓝色系的颜色
-          return 'rgb(' + 
-            Math.round(Math.random() * 50) + ',' + 
-            Math.round(Math.random() * 150 + 100) + ',' + 
-            Math.round(Math.random() * 100 + 155) + ')';
-        }
-      },
-      emphasis: {
-        textStyle: {
-          color: '#00FFFF',
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 255, 255, 0.5)'
-        }
-      },
-      data: data
-    }],
-    animation: true,
-    animationDuration: 2000,
-    animationEasing: 'cubicOut'
-  };
-  
-  chart.setOption(option);
-  
-  // 响应窗口大小变化
-  window.addEventListener('resize', () => {
-    chart.resize();
-  });
-};
+
 
 // 初始化经络线动画
 const initMeridianLines = () => {
@@ -713,14 +529,6 @@ const initSymbols = () => {
 
 // 初始化装饰图谱
 const initDiagrams = () => {
-  // 针灸穴位图加载
-  const acupointsElement = document.querySelector('.diagram-acupoints');
-  acupointsElement.style.backgroundImage = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'%3E%3Cpath d=\'M100,20 C140,20 170,50 170,100 C170,150 140,180 100,180 C60,180 30,150 30,100 C30,50 60,20 100,20 Z\' fill=\'none\' stroke=\'rgba(0,200,255,0.3)\' stroke-width=\'1\'/%3E%3Ccircle cx=\'100\' cy=\'60\' r=\'2\' fill=\'rgba(0,255,255,0.7)\'/%3E%3Ccircle cx=\'130\' cy=\'80\' r=\'2\' fill=\'rgba(0,255,255,0.7)\'/%3E%3Ccircle cx=\'80\' cy=\'100\' r=\'2\' fill=\'rgba(0,255,255,0.7)\'/%3E%3Ccircle cx=\'110\' cy=\'120\' r=\'2\' fill=\'rgba(0,255,255,0.7)\'/%3E%3Ccircle cx=\'70\' cy=\'140\' r=\'2\' fill=\'rgba(0,255,255,0.7)\'/%3E%3Cpath d=\'M50,80 Q100,40 150,80\' fill=\'none\' stroke=\'rgba(0,200,255,0.2)\' stroke-width=\'1\' stroke-dasharray=\'3,3\'/%3E%3Cpath d=\'M50,120 Q100,160 150,120\' fill=\'none\' stroke=\'rgba(0,200,255,0.2)\' stroke-width=\'1\' stroke-dasharray=\'3,3\'/%3E%3C/svg%3E")';
-  
-  // 药草图案加载
-  const herbsElement = document.querySelector('.diagram-herbs');
-  herbsElement.style.backgroundImage = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'%3E%3Cpath d=\'M100,40 Q120,20 140,40 T180,60 Q200,80 180,100 T140,140 Q120,160 100,140 T60,100 Q40,80 60,60 T100,40 Z\' fill=\'none\' stroke=\'rgba(0,255,150,0.3)\' stroke-width=\'1\'/%3E%3Cpath d=\'M100,50 L100,130\' stroke=\'rgba(0,255,150,0.4)\' stroke-width=\'1\'/%3E%3Cpath d=\'M80,70 Q100,60 120,70\' fill=\'none\' stroke=\'rgba(0,255,150,0.4)\' stroke-width=\'1\'/%3E%3Cpath d=\'M75,90 Q100,80 125,90\' fill=\'none\' stroke=\'rgba(0,255,150,0.4)\' stroke-width=\'1\'/%3E%3Cpath d=\'M70,110 Q100,100 130,110\' fill=\'none\' stroke=\'rgba(0,255,150,0.4)\' stroke-width=\'1\'/%3E%3C/svg%3E")';
-  
   // 添加动画
   gsap.to('.diagram-acupoints', {
     rotation: 360,
@@ -806,237 +614,6 @@ const initCustomDiagrams = () => {
   });
 };
 
-// 初始化中医理论流派分布图表
-const initSchoolsChart = () => {
-  const chart = echarts.init(schoolsChart.value);
-  
-  const option = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    textStyle: {
-      color: 'rgba(0, 200, 255, 0.8)'
-    },
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b}: {c} ({d}%)',
-      backgroundColor: 'rgba(0, 15, 50, 0.7)',
-      borderColor: 'rgba(0, 200, 255, 0.5)',
-      textStyle: {
-        color: 'rgba(0, 200, 255, 1)'
-      }
-    },
-    legend: {
-      orient: 'vertical',
-      right: 10,
-      top: 'center',
-      itemWidth: 10,
-      itemHeight: 10,
-      textStyle: {
-        color: 'rgba(0, 200, 255, 0.8)',
-        fontSize: 10
-      },
-      data: ['经方学派', '温病学派', '伤寒学派', '汤液学派', '针灸学派', '综合学派']
-    },
-    series: [
-      {
-        name: '理论流派',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        center: ['40%', '50%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderColor: 'rgba(0, 0, 0, 0.3)',
-          borderWidth: 2
-        },
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: '12',
-            fontWeight: 'bold',
-            color: 'rgba(0, 200, 255, 1)'
-          },
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 150, 255, 0.5)'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: [
-          { value: 35, name: '经方学派', itemStyle: { color: 'rgba(0, 120, 215, 0.8)' } },
-          { value: 25, name: '温病学派', itemStyle: { color: 'rgba(0, 180, 180, 0.8)' } },
-          { value: 20, name: '伤寒学派', itemStyle: { color: 'rgba(70, 130, 180, 0.8)' } },
-          { value: 15, name: '汤液学派', itemStyle: { color: 'rgba(70, 200, 230, 0.8)' } },
-          { value: 10, name: '针灸学派', itemStyle: { color: 'rgba(30, 160, 255, 0.8)' } },
-          { value: 5, name: '综合学派', itemStyle: { color: 'rgba(0, 255, 255, 0.8)' } }
-        ],
-        animationType: 'scale',
-        animationEasing: 'elasticOut',
-        animationDelay: function (idx) {
-          return Math.random() * 200;
-        }
-      }
-    ]
-  };
-  
-  chart.setOption(option);
-  
-  // 响应窗口大小变化
-  window.addEventListener('resize', () => {
-    chart.resize();
-  });
-};
-
-// 初始化药材功效雷达图
-const initHerbsRadarChart = () => {
-  const chart = echarts.init(herbsRadarChart.value);
-  
-  const option = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    textStyle: {
-      color: 'rgba(0, 200, 255, 0.8)'
-    },
-    tooltip: {
-      trigger: 'item',
-      backgroundColor: 'rgba(0, 15, 50, 0.7)',
-      borderColor: 'rgba(0, 200, 255, 0.5)',
-      textStyle: {
-        color: 'rgba(0, 200, 255, 1)'
-      }
-    },
-    legend: {
-      data: ['人参', '黄芪', '当归', '川芎', '甘草'],
-      textStyle: {
-        color: 'rgba(0, 200, 255, 0.8)',
-        fontSize: 10
-      },
-      right: 0,
-      top: 0
-    },
-    radar: {
-      shape: 'circle',
-      radius: '65%',
-      center: ['50%', '55%'],
-      indicator: [
-        { name: '补气', max: 100 },
-        { name: '补血', max: 100 },
-        { name: '安神', max: 100 },
-        { name: '清热', max: 100 },
-        { name: '祛湿', max: 100 },
-        { name: '活血化瘀', max: 100 }
-      ],
-      axisName: {
-        color: 'rgba(0, 200, 255, 0.8)',
-        fontSize: 10
-      },
-      splitArea: {
-        areaStyle: {
-          color: ['rgba(0, 50, 100, 0.1)', 'rgba(0, 60, 120, 0.1)'],
-          shadowColor: 'rgba(0, 200, 255, 0.1)',
-          shadowBlur: 10
-        }
-      },
-      axisLine: {
-        lineStyle: {
-          color: 'rgba(0, 200, 255, 0.2)'
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          color: 'rgba(0, 200, 255, 0.3)'
-        }
-      }
-    },
-    series: [{
-      name: '药材功效对比',
-      type: 'radar',
-      emphasis: {
-        lineStyle: {
-          width: 4
-        }
-      },
-      data: [
-        {
-          value: [90, 30, 60, 10, 20, 40],
-          name: '人参',
-          areaStyle: {
-            color: 'rgba(0, 120, 215, 0.3)'
-          },
-          lineStyle: {
-            color: 'rgba(0, 120, 215, 0.8)'
-          },
-          itemStyle: {
-            color: 'rgba(0, 120, 215, 0.8)'
-          }
-        },
-        {
-          value: [85, 50, 30, 20, 40, 30],
-          name: '黄芪',
-          areaStyle: {
-            color: 'rgba(0, 180, 180, 0.3)'
-          },
-          lineStyle: {
-            color: 'rgba(0, 180, 180, 0.8)'
-          },
-          itemStyle: {
-            color: 'rgba(0, 180, 180, 0.8)'
-          }
-        },
-        {
-          value: [20, 90, 40, 30, 20, 70],
-          name: '当归',
-          areaStyle: {
-            color: 'rgba(70, 130, 180, 0.3)'
-          },
-          lineStyle: {
-            color: 'rgba(70, 130, 180, 0.8)'
-          },
-          itemStyle: {
-            color: 'rgba(70, 130, 180, 0.8)'
-          }
-        },
-        {
-          value: [30, 60, 20, 40, 30, 85],
-          name: '川芎',
-          areaStyle: {
-            color: 'rgba(70, 200, 230, 0.3)'
-          },
-          lineStyle: {
-            color: 'rgba(70, 200, 230, 0.8)'
-          },
-          itemStyle: {
-            color: 'rgba(70, 200, 230, 0.8)'
-          }
-        },
-        {
-          value: [60, 40, 50, 70, 50, 30],
-          name: '甘草',
-          areaStyle: {
-            color: 'rgba(30, 160, 255, 0.3)'
-          },
-          lineStyle: {
-            color: 'rgba(30, 160, 255, 0.8)'
-          },
-          itemStyle: {
-            color: 'rgba(30, 160, 255, 0.8)'
-          }
-        }
-      ]
-    }]
-  };
-  
-  chart.setOption(option);
-  
-  // 响应窗口大小变化
-  window.addEventListener('resize', () => {
-    chart.resize();
-  });
-};
 
 // 生命周期钩子
 onMounted(() => {
@@ -1048,31 +625,6 @@ onMounted(() => {
   initCustomDiagrams();
   cycleQuotes();
   // 等待组件完全渲染后再初始化图表
-  setTimeout(() => {
-    initHerbsChart();
-    initWordCloud();
-    initSchoolsChart();
-    initHerbsRadarChart();
-  }, 100);
-  const chartIds = ['flavorChart', 'elementChart', 'seasonChart', 'organChart', 'toneChart'];
-  chartIds.forEach((id, index) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const chart = echarts.init(el);
-    chart.setOption({
-      title: { text: ['五味', '五行', '五季', '五脏', '五音'][index], left: 'center', textStyle: { fontSize: 12, color: '#00eaff' } },
-      backgroundColor: 'transparent',
-      tooltip: { show: false },
-      series: [{
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: { show: false },
-        labelLine: { show: false },
-        data: Array.from({ length: 5 }, (_, i) => ({ value: Math.random() * 10 + 10, name: String.fromCharCode(65 + i) }))
-      }]
-    });
-  });
 });
 
 onUnmounted(() => {
@@ -1846,9 +1398,51 @@ h3 {
   font-family: "FangSong", serif;
 }
 
+.five-elements-timeline-right {
+  position: absolute;
+  top: -190px;
+  left: 550px; 
+  width: 240px;
+  min-height: 70%;
+  overflow-y: auto;
+  z-index: 10;
+  padding-left: 20px;
+  border-left: 2px solid rgba(0, 200, 255, 0.2);
+}
+
+.timeline-item-right {
+  position: relative;
+  margin-bottom: 24px;
+  padding-left: 10px;
+}
+
+.timeline-dot-right {
+  position: absolute;
+  left: -10px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+}
+
+.timeline-content-right h4 {
+  font-size: 1em;
+  color: #00eaff;
+  margin: 0 0 4px;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+
+.timeline-content-right p {
+  font-size: 0.9em;
+  color: rgba(200, 255, 255, 0.8);
+  line-height: 1.4;
+  font-family: "FangSong", serif;
+}
 /* 响应式调整 */
 @media (max-width: 900px) {
-  .meridian-cycle-diagram, .five-elements-balance {
+  .meridian-cycle-diagram, .five-elements-balance , .five-elements-balance-right {
     transform: scale(0.8);
   }
   
@@ -1856,7 +1450,7 @@ h3 {
     left: 5%;
   }
   
-  .five-elements-balance {
+  .five-elements-balance , .five-elements-balance-right {
     top: 10%;
     transform: translateX(-50%) scale(0.8);
   }

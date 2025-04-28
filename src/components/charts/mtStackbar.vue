@@ -27,12 +27,12 @@ const config = ref({
             },
             th: {
                 backgroundColor: '#FFFFFFff',
-                color: '#1A1A1Aff',
+                color: '#222222ff',
                 outline: 'none'
             },
             td: {
                 backgroundColor: '#FFFFFFff',
-                color: '#1A1A1Aff',
+                color: '#222222ff',
                 outline: 'none',
                 roundingValue: 0
             }
@@ -71,8 +71,8 @@ const config = ref({
         style: {
             fontFamily: 'inherit',
             chart: {
-                backgroundColor: '#000000ff',
-                color: '#111111ff',
+                backgroundColor: '#222222ff',
+                color: '#222222ff',
                 height: 250,
                 width: 800,
                 padding: {
@@ -99,7 +99,7 @@ const config = ref({
                 legend: {
                     show: true,
                     bold: false,
-                    backgroundColor: '#000000ff',
+                    backgroundColor: '#222222ff',
                     color: '#FFFFFFff',
                     fontSize: 14
                 },
@@ -116,8 +116,8 @@ const config = ref({
                 },
                 tooltip: {
                     show: true,
-                    color: '#1A1A1Aff',
-                    backgroundColor: '#FFFFFFff',
+                    color: '#222222ff',
+                    backgroundColor: '#222222ff',
                     fontSize: 14,
                     customFormat: null,
                     borderRadius: 4,

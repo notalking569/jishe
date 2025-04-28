@@ -1,12 +1,20 @@
 <template>
+      <header class="dashboard-header">
+
+  <div class="title">
+    <h1>五行理论--针刺</h1>
+  </div>
+
   <button class="back-btn" @click="router.push('/main')">
       返回主界面
     </button>
-  
-  <!-- 添加川派历史按钮 -->
   <button class="history-btn" @click="router.push('/history')">
       川派历史
   </button>
+
+</header>
+
+
   
   <!-- 左侧面板 -->
   <div class="left-panel tech-panel">
@@ -344,6 +352,66 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.dashboard-header {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(to right,  rgba(16, 28, 41, 0.85),  rgba(16, 28, 41, 0.85), rgba(16, 28, 41, 0.85));
+  border-bottom: 1px solid #00ffff;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.title h1 {
+  font-family: 'Microsoft YaHei', serif;
+  font-size: 30px;
+  color: #00ffff;
+  letter-spacing: 3px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+/* 返回按钮 */
+.back-btn {
+  background-color: transparent;
+  color: #79c3f4;
+  border: 1px solid #79c3f4;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.back-btn:hover {
+  background-color: rgba(121, 195, 244, 0.1);
+  box-shadow: 0 0 6px #79c3f4;
+}
+
+/* 数据分析按钮 */
+.history-btn {
+  background-color: transparent;
+  color: #79c3f4;
+  border: 1px solid #79c3f4;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.history-btn:hover {
+  background-color: rgba(121, 195, 244, 0.1);
+  box-shadow: 0 0 6px #79c3f4;
+}
 @media (min-width: 701px) {
   .left-panel,
   .right-panel {

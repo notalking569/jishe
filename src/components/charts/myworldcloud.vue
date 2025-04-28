@@ -50,7 +50,7 @@ const config = ref({
         style: {
             fontFamily: 'inherit',
             chart: {
-                backgroundColor: '#000000ff',
+                backgroundColor: '#222222ff',
                 color: '#1A1A1Aff',
                 height: 300,
                 width: 512,
