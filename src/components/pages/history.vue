@@ -2,14 +2,14 @@
   <button class="back-btn" @click="router.push('/acupuncture')">
     返回
   </button>
-  
+
   <div class="history-container">
     <!-- 标题栏 -->
     <header class="history-header">
       <h1 class="tech-main-title">川派针灸历史沿革</h1>
       <div class="tech-subtitle-line"></div>
     </header>
-    
+
     <!-- 主内容区 -->
     <div class="main">
       <div class="nav-arrow up" id="up-btn" @click="slideToPrev">▲</div>
@@ -59,7 +59,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- 网格背景装饰 -->
   <div class="tech-grid-overlay"></div>
 </template>
@@ -84,10 +84,10 @@ function slideToPrev() {
     // 根据偏移量设置卡片垂直偏移效果
     slide.style.transform = `translateY(${offset * 100}%)`;
   });
-  
+
   // 调用旋转时钟表盘函数
   clockRotate(offset);
-  
+
   // 更新当前时期高亮
   updateCurrentPeriod();
 }
@@ -99,9 +99,9 @@ function slideToNext() {
   slides.forEach(slide => {
     slide.style.transform = `translateY(${offset * 100}%)`;
   });
-  
+
   clockRotate(offset);
-  
+
   // 更新当前时期高亮
   updateCurrentPeriod();
 }
@@ -111,7 +111,7 @@ function clockRotate(index) {
   // 根据当前索引计算角度，从顶部12点位置开始（-90度），每个时期间隔72度
   const degree = -90 + (Math.abs(index) * 72);
   console.log("index = ", index, "degree = ", degree);
-  
+
   const clock = document.querySelector("#clock-table");
   if (clock) {
     clock.style.transform = `rotate(${-degree}deg)`;
@@ -122,7 +122,7 @@ function clockRotate(index) {
 function addClockScale(degree) {
   const clock = document.querySelector("#clock-table");
   if (!clock) return;
-  
+
   // 创建一个隐藏的表格元素
   const invisibleClockTable = document.createElement("div");
   // 添加类名
@@ -143,23 +143,23 @@ function addClockScale(degree) {
 function addThickClockScale(degree, time) {
   const clock = document.querySelector("#clock-table");
   if (!clock) return;
-  
+
   // 创建一个隐藏的表格元素
   const invisibleClockTable = document.createElement("div");
   invisibleClockTable.className = "invisible-table";
   invisibleClockTable.style.transform = `rotate(${degree}deg)`;
-  
+
   const thickClockScale = document.createElement("div");
   thickClockScale.className = "clock-thick";
-  
+
   const scaleContent = document.createElement("span");
   scaleContent.textContent = `${time}`;
-  
+
   // 添加一个额外的类来标识当前时期（先秦时期）
   if (time === "先秦时期") {
     thickClockScale.classList.add("current-period");
   }
-  
+
   thickClockScale.appendChild(scaleContent);
   invisibleClockTable.appendChild(thickClockScale);
   clock.appendChild(invisibleClockTable);
@@ -169,17 +169,17 @@ function addThickClockScale(degree, time) {
 function updateCurrentPeriod() {
   // 获取所有粗刻度
   const thickScales = document.querySelectorAll(".clock-thick");
-  
+
   // 移除所有current-period类
   thickScales.forEach(scale => {
     scale.classList.remove("current-period");
   });
-  
+
   // 根据当前offset计算当前时期索引
   // offset为0时是先秦时期（第一个时期）
   // offset为-4时是近现代（最后一个时期）
   const currentPeriodIndex = Math.abs(offset);
-  
+
   // 为当前时期添加current-period类
   if (thickScales[currentPeriodIndex]) {
     thickScales[currentPeriodIndex].classList.add("current-period");
@@ -192,37 +192,37 @@ onMounted(() => {
   if (clockTable) {
     clockTable.innerHTML = '';
   }
-  
+
   // 设定历史时期，按照历史顺序排列（从先秦到近现代）
   const periods = ["先秦时期", "汉唐时期", "宋元时期", "明清时期", "近现代"];
-  
+
   // 均匀分布时钟刻度：计算角度间隔（360度/5个时期 = 72度每个）
   const degreeInterval = 72;
-  
+
   // 绘制时钟刻度和标签
   for (let i = 0; i < 5; i++) {
     // 主刻度，间隔72度，从顶部12点位置开始（-90度），顺时针旋转
     const degree = -90 + (i * degreeInterval);
-    
+
     // 添加主刻度和时期标签
     addThickClockScale(degree, periods[i]);
-    
+
     // 添加小刻度（每个主刻度之间添加4个小刻度）
     for (let j = 1; j < 5; j++) {
       addClockScale(degree + j * (degreeInterval / 5));
     }
   }
-  
+
   // 初始化显示先秦时期（第一张卡片）
   offset = 0;
   clockRotate(0);
-  
+
   // 设置卡片初始位置
   const slides = Array.from(document.querySelectorAll(".card"));
   slides.forEach(slide => {
     slide.style.transform = `translateY(${offset * 100}%)`;
   });
-  
+
   // 初始化高亮当前时期
   updateCurrentPeriod();
 });
@@ -230,19 +230,26 @@ onMounted(() => {
 
 <style lang="scss">
 :root {
-  --tech-primary: #00c8ff; /* 科技蓝 */
-  --tech-secondary: #7045ff; /* 科技紫 */
-  --tech-accent: #00ffaa; /* 科技青 */
-  --tech-dark: #0a1218; /* 深背景色 */
-  --tech-darker: #060d13; /* 更深的背景色 */
-  --tech-light: #e9f9ff; /* 亮色文字 */
-  --tech-panel-bg: rgba(16, 28, 41, 0.85); /* 面板背景 */
-  --tech-glow: 0 0 10px rgba(0, 200, 255, 0.5); /* 发光效果 */
-  --tech-gradient: linear-gradient(
-    135deg,
-    var(--tech-primary),
-    var(--tech-secondary)
-  ); /* 渐变色 */
+  --tech-primary: #00c8ff;
+  /* 科技蓝 */
+  --tech-secondary: #7045ff;
+  /* 科技紫 */
+  --tech-accent: #00ffaa;
+  /* 科技青 */
+  --tech-dark: #0a1218;
+  /* 深背景色 */
+  --tech-darker: #060d13;
+  /* 更深的背景色 */
+  --tech-light: #e9f9ff;
+  /* 亮色文字 */
+  --tech-panel-bg: rgba(16, 28, 41, 0.85);
+  /* 面板背景 */
+  --tech-glow: 0 0 10px rgba(0, 200, 255, 0.5);
+  /* 发光效果 */
+  --tech-gradient: linear-gradient(135deg,
+      var(--tech-primary),
+      var(--tech-secondary));
+  /* 渐变色 */
 }
 
 body {
@@ -263,7 +270,7 @@ body {
   text-align: center;
   margin-bottom: 40px;
   position: relative;
-  
+
   .tech-main-title {
     color: var(--tech-primary);
     font-size: 32px;
@@ -272,8 +279,9 @@ body {
     text-transform: uppercase;
     position: relative;
     display: inline-block;
-    
-    &:before, &:after {
+
+    &:before,
+    &:after {
       content: '';
       position: absolute;
       top: 50%;
@@ -282,24 +290,25 @@ body {
       background: var(--tech-gradient);
       transform: translateY(-50%);
     }
-    
+
     &:before {
       left: -50px;
     }
-    
+
     &:after {
       right: -50px;
     }
   }
-  
+
   .tech-subtitle-line {
     width: 150px;
     height: 2px;
     background: var(--tech-gradient);
     margin: 15px auto 0;
     position: relative;
-    
-    &:before, &:after {
+
+    &:before,
+    &:after {
       content: '';
       position: absolute;
       width: 6px;
@@ -308,11 +317,11 @@ body {
       border-radius: 50%;
       top: -2px;
     }
-    
+
     &:before {
       left: 0;
     }
-    
+
     &:after {
       right: 0;
     }
@@ -377,10 +386,6 @@ body {
   transition: transform .8s ease-in-out, opacity .5s ease-in-out;
   padding: 0 15px 0 25px;
   position: relative;
-  opacity: 0.3;
-}
-
-.card[style*="translateY(0%)"] {
   opacity: 1;
 }
 
@@ -450,6 +455,7 @@ body {
   0% {
     box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
   }
+
   100% {
     box-shadow: 0 0 25px rgba(0, 200, 255, 0.8);
   }
@@ -460,6 +466,7 @@ body {
     box-shadow: 0 0 8px var(--tech-primary);
     background: rgba(0, 200, 255, 0.8);
   }
+
   100% {
     box-shadow: 0 0 20px var(--tech-primary);
     background: rgba(0, 200, 255, 1);
@@ -552,13 +559,13 @@ body {
   backdrop-filter: blur(5px);
   border: 1px solid rgba(0, 200, 255, 0.3);
   box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
-  
+
   &:hover {
     background: rgba(0, 200, 255, 0.2);
     transform: translateY(-2px);
     box-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
@@ -570,39 +577,40 @@ body {
     width: 50%;
     left: 5%;
   }
-  
+
   .nav-arrow {
     left: 60%;
   }
-  
+
   .history-header .tech-main-title {
     font-size: 24px;
-    
-    &:before, &:after {
+
+    &:before,
+    &:after {
       width: 20px;
     }
-    
+
     &:before {
       left: -30px;
     }
-    
+
     &:after {
       right: -30px;
     }
   }
-  
+
   .card-time {
     font-size: 30px;
   }
-  
+
   .card-title {
     font-size: 36px;
   }
-  
+
   .card-passage {
     font-size: 18px;
   }
-  
+
   .instruction-text {
     left: 60%;
   }
@@ -615,10 +623,8 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(
-      rgba(0, 200, 255, 0.05) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(rgba(0, 200, 255, 0.05) 1px,
+      transparent 1px),
     linear-gradient(90deg, rgba(0, 200, 255, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
@@ -637,4 +643,4 @@ body {
   letter-spacing: 2px;
   z-index: 10;
 }
-</style> 
+</style>
