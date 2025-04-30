@@ -321,28 +321,6 @@
             box-shadow: 0 0 18px rgba(0, 150, 255, 0.8); /* 鼠标悬停时阴影加深 */
             transform: scale(1.05); /* 鼠标悬停时稍微放大 */
         }
-
-        .toggle-herbs {
-            position: absolute;
-            top: 1rem;
-            right: 6rem; /* 位于返回按钮左侧 */
-            background: rgba(233, 69, 96, 0.8); /* 不同于返回按钮的颜色 */
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            border: 1px solid rgba(233, 69, 96, 0.6);
-            box-shadow: 0 0 12px rgba(233, 69, 96, 0.6);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .toggle-herbs:hover {
-            background: rgba(233, 100, 120, 0.8);
-            box-shadow: 0 0 18px rgba(233, 100, 120, 0.8);
-            transform: scale(1.05);
-        }
     </style>
 </head>
 <body>
@@ -461,41 +439,9 @@
     </div>
 
     <script>
-        // 全局变量，标记当前是否显示四川药材
-        let isShowingSichuanHerbs = false;
-
-        // 切换药材数据的函数
-        function toggleHerbsData() {
-            // 切换状态
-            isShowingSichuanHerbs = !isShowingSichuanHerbs;
-            
-            // 更新按钮文字
-            const toggleBtn = document.getElementById('toggle-herbs-btn');
-            toggleBtn.querySelector('span').textContent = isShowingSichuanHerbs ? '全部药材' : '川派药材';
-            
-            // 更改按钮样式
-            if (isShowingSichuanHerbs) {
-                toggleBtn.style.background = 'rgba(66, 135, 245, 0.8)';
-                toggleBtn.style.borderColor = 'rgba(66, 135, 245, 0.6)';
-                toggleBtn.style.boxShadow = '0 0 12px rgba(66, 135, 245, 0.6)';
-            } else {
-                toggleBtn.style.background = 'rgba(233, 69, 96, 0.8)';
-                toggleBtn.style.borderColor = 'rgba(233, 69, 96, 0.6)';
-                toggleBtn.style.boxShadow = '0 0 12px rgba(233, 69, 96, 0.6)';
-            }
-            
-            // 清除当前药材
-            const container = document.getElementById('herbs-container');
-            const herbElements = document.querySelectorAll('.herb-item');
-            herbElements.forEach(herb => herb.remove());
-            
-            // 重新生成并显示新的药材
-            initializeHerbs();
-        }
-
         // 提取初始化药材的部分为一个独立函数
         function initializeHerbs() {
-            const herbs = generateHerbalData(isShowingSichuanHerbs);
+            const herbs = generateHerbalData();
             const container = document.getElementById('herbs-container');
             const tooltip = document.getElementById('herb-tooltip');
             const tooltipTitle = document.getElementById('tooltip-title');
@@ -628,12 +574,8 @@
         }
 
         // 模拟药材数据
-        function generateHerbalData(isSichuanHerbs = false) {
-            if (isSichuanHerbs) {
-                return generateSichuanHerbalData();
-            } else {
-                return generateAllHerbalData();
-            }
+        function generateHerbalData() {
+            return generateAllHerbalData();
         }
 
         // 全国药材数据
@@ -659,35 +601,6 @@
                     taste: ['甘', '苦', '辛', '酸', '咸'][Math.floor(Math.random() * 5)], // 药味
                     meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
                     function: ['补气', '活血', '清热', '祛风', '利水'][Math.floor(Math.random() * 5)] // 功效
-                });
-            }
-            
-            return herbs;
-        }
-
-        // 川派药材数据
-        function generateSichuanHerbalData() {
-            const properties = ['温', '热', '寒', '凉', '平'];
-            const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
-            
-            const herbs = [];
-            const herbNames = [
-                '川芎', '川贝母', '川乌', '川牛膝', '川楝子', '川椒', '川木香', '川芍药', '川麦冬', '川射干',
-                '川当归', '川黄柏', '川白芷', '川芩', '川朴', '川连', '川姜', '川苦楝', '川桂皮', '川贝',
-                '川艾', '川薄荷', '川芫花', '川厚朴', '川赤芍', '银杏叶', '天麻', '独活', '白芷', '杜仲',
-                '猪苓', '柴胡', '黄精', '桑白皮', '夏枯草', '玄参', '鸡血藤', '泽泻', '虎杖', '枸杞子'
-            ];
-            
-            for (let i = 0; i < herbNames.length; i++) {
-                herbs.push({
-                    id: i,
-                    name: herbNames[i],
-                    frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
-                    property: properties[Math.floor(Math.random() * properties.length)], // 药性
-                    category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
-                    taste: ['甘', '苦', '辛', '酸', '咸'][Math.floor(Math.random() * 5)], // 药味
-                    meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
-                    function: ['祛风湿', '清热解毒', '活血化瘀', '温通经络', '化痰止咳'][Math.floor(Math.random() * 5)] // 川派特色功效
                 });
             }
             
