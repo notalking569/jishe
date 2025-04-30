@@ -246,11 +246,48 @@ watch(() => props.data, (newData) => {
 }, { immediate: true });
 </script>
 <template>
-    <!-- Using a wrapper is optional -->
-    <div :style="{ width: '100%', height:'100%'}">
-        <VueUiSparkbar
-            :config="config"
-            :dataset="dataset"
-        />
+    <!-- 添加一个带滚动功能的外层容器 -->
+    <div class="sparkbar-container">
+        <div class="sparkbar-wrapper">
+            <VueUiSparkbar
+                :config="config"
+                :dataset="dataset"
+            />
+        </div>
     </div>
 </template>
+
+<style scoped>
+.sparkbar-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* 添加滚动条样式美化 */
+    scrollbar-width: thin;
+    scrollbar-color: #666 #222;
+}
+
+/* Webkit浏览器的滚动条样式 */
+.sparkbar-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sparkbar-container::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 4px;
+}
+
+.sparkbar-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+
+.sparkbar-container::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+.sparkbar-wrapper {
+    min-height: 400px; /* 确保有足够的高度显示所有内容 */
+    padding: 10px;
+}
+</style>
