@@ -29,6 +29,11 @@
             <button @click="showImage('geography')">地理特点</button>
           </div>
         </div>
+
+        <!-- 添加地图组件 -->
+        <div class="map-box">
+          <SichuanMap />
+        </div>
       </aside>
   <!-- 右侧部分 -->
   <div class="right-panel">
@@ -71,7 +76,7 @@
         <h3>川人体质调理建议</h3>
         <p>根据古籍《素问·上古真天论》和《类经·藏象类》的记载，以及巴蜀地区名医的经验，以下是一些针对川人体质的调理建议：</p>
         <ul>
-          <li>饮食调理：减少辛辣、油腻食物的摄入，多吃健脾祛湿的食物，例如薏苡仁、赤小豆等。遵循《素问》中“五谷为养，五果为助，五畜为益，五菜为充”的饮食原则。</li>
+          <li>饮食调理：减少辛辣、油腻食物的摄入，多吃健脾祛湿的食物，例如薏苡仁、赤小豆等。遵循《素问》中"五谷为养，五果为助，五畜为益，五菜为充"的饮食原则。</li>
           <li>生活习惯：避免长时间处于潮湿环境，适当进行户外活动，保持干燥。劳逸结合，保证充足的睡眠，避免过度劳累。</li>
                 </ul>
       </div>
@@ -83,6 +88,7 @@
   <script setup>
   import { ref, onMounted, nextTick } from 'vue';
   import { useRouter } from 'vue-router';
+  import SichuanMap from '../charts/SichuanMap.vue';  // 导入 SichuanMap 组件
 
 const caseList = [
   { name: '望诊' },
@@ -375,15 +381,16 @@ function nextImage() {
   .left-panel {
   margin-top: 0%;
   width: 20%;
-  height: 100%; /* 或者直接设置为 100% */
+  height: 100%;
   border-radius: 10px;
   background-color: #1c1c1c;
-  border: 1px solid #0ff; /* 四个边都有边框 */
-  padding: 30px 20px;
+  border: 1px solid #0ff;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 30px; /* 模块之间垂直间距 */
-  box-sizing: border-box; /* 确保边框不会影响整体宽度 */
+  gap: 20px;
+  box-sizing: border-box;
+  overflow-y: hidden;
 }
   .left-panel h3 {
     font-size: 1.4em;
@@ -586,6 +593,20 @@ function nextImage() {
 .right-bottom ul li::before {
   content: "✓ ";
   color: #0ff;
+}
+
+.map-box {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-top: 5px;
+  height: 300px;
+}
+
+/* 调整地图容器样式 */
+:deep(.map-container) {
+  height: 100% !important;
+  width: 100% !important;
 }
 
 </style>
