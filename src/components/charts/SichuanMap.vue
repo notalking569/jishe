@@ -2,6 +2,10 @@
 <template>
     <div class="map-container">
       <div id="map" ref="mapContainer"></div>
+      <div class="map-source">
+        <!-- https://cloudcenter.tianditu.gov.cn/administrativeDivision -->
+        地图来源：天地图 | 审图号：GS（2024）0650号
+      </div>
     </div>
   </template>
   
@@ -58,7 +62,8 @@
         this.loadMapData()
       },
       loadMapData() {
-        fetch('./src/assets/sichuan.json')
+        // 地图审阅号 GS（2024）0650号
+        fetch('./src/assets/sichuanpro.geojson')
           .then(response => response.json())
           .then(geoJson => {
             echarts.registerMap('Sichuan', geoJson)
@@ -82,12 +87,13 @@
               tooltip: {
                 trigger: 'item',
                 formatter: params => {
-                  return `${params.name}<br/>数值: ${params.value}`
+                  return `${params.name}<br/>平均海拔: ${params.value}m`
                 }
               },
               visualMap: {
                 min: 0,
                 max: 3600,
+                show: false,
                 text: ['高', '低'],
                 realtime: false,
                 calculable: false,
@@ -247,6 +253,7 @@
     width: 100%;
     height: 100%;
     background-color: transparent;
+    position: relative;
   }
   #map {
     width: 100%;
@@ -302,5 +309,16 @@
     margin: 5px 0;
     font-size: 14px;
     color: #666;
+  }
+  .map-source {
+    position: absolute;
+    left: 1px;
+    bottom: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #666;
+    z-index: 1000;
   }
   </style>
