@@ -1,6 +1,6 @@
 <script setup>
 import { FALSE } from "sass";
-import { ref, defineProps, watch } from "vue";
+import { ref, watch } from "vue";
 import { VueUiStackbar } from "vue-data-ui";
 import "vue-data-ui/style.css"; // If you are using multiple components, place styles import in your main
 

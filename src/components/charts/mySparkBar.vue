@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, watch } from "vue";
+import { ref, watch } from "vue";
 import { VueUiSparkbar } from "vue-data-ui";
 import "vue-data-ui/style.css"; // If you are using multiple components, place styles import in your main
 
