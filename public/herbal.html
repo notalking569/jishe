@@ -449,9 +449,10 @@
     </div>
 
     <script>
+        
         // 提取初始化药材的部分为一个独立函数
-        function initializeHerbs() {
-            const herbs = generateHerbalData();
+        function initializeHerbs(herbs) {
+            // console.log(herbs)
             const container = document.getElementById('herbs-container');
             const tooltip = document.getElementById('herb-tooltip');
             const tooltipTitle = document.getElementById('tooltip-title');
@@ -468,12 +469,12 @@
             
             // 计算各类别药材的位置
             const categoryPositions = {
-                '根部': { top: '80%', left: '50%' },
-                '茎部': { top: '65%', left: '35%' },
-                '叶部': { top: '65%', left: '65%' },
-                '花部': { top: '35%', left: '65%' },
-                '果实': { top: '35%', left: '35%' },
-                '种子': { top: '20%', left: '50%' },
+                '根部': { top: '70%', left: '50%' },
+                '茎部': { top: '60%', left: '35%' },
+                '叶部': { top: '60%', left: '65%' },
+                '花部': { top: '40%', left: '65%' },
+                '果实': { top: '40%', left: '35%' },
+                '种子': { top: '25%', left: '50%' },
                 '全草': { top: '50%', left: '50%' }
             };
             
@@ -582,32 +583,58 @@
 
         // 全国药材数据
         function generateAllHerbalData() {
-            const tastes = ['酸', '甘', '苦', '辛', '咸'];
-            const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
-            const properties = ['温', '热', '寒', '凉'];
-            
-            const herbs = [];
-            const herbNames = [
-                '人参', '黄芪', '当归', '川芎', '白芍', '熟地黄', '何首乌', '党参', '白术', '茯苓',
-                '陈皮', '半夏', '砂仁', '枳实', '木香', '厚朴', '黄连', '黄芩', '黄柏', '栀子',
-                '桂皮', '干姜', '附子', '丁香', '肉桂', '艾叶', '薄荷', '柴胡', '香附', '紫苏',
-                '菊花', '金银花', '连翘', '板蓝根', '蝉蜕', '牛蒡子', '桔梗', '甘草', '大黄', '芒硝'
-            ];
-            
-            for (let i = 0; i < herbNames.length; i++) {
-                herbs.push({
-                    id: i,
-                    name: herbNames[i],
-                    frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
-                    property: properties[Math.floor(Math.random() * properties.length)], // 药性
-                    category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
-                    taste: tastes[Math.floor(Math.random() * tastes.length)], // 药味
-                    meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
-                    function: ['补气', '活血', '清热', '祛风', '利水'][Math.floor(Math.random() * 5)] // 功效
-                });
+            return fetch('src/assets/data_zcy.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('无法加载 data_zcy.json 文件');
             }
+            return response.json(); // 解析 JSON 数据
+        })
+        .then(data => {
+            if (!Array.isArray(data)) {
+                throw new Error('JSON 数据不是数组');
+            }
+            return data.map((item, index) => ({ // 修正箭头函数语法
+                id: index,
+                name: item.name,
+                frequency: item.frequency || Math.floor(Math.random() * 90) + 10, // 使用 JSON 数据或随机值
+                taste: item.taste,
+                property: item.property,
+                category: item.category,
+                meridian: item.meridian || ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 使用 JSON 数据或随机值
+                function: item.function
+            }));
+        })
+        .catch(error => {
+            console.error('加载草药数据出错:', error);
+            return []; // 返回空数组作为默认值
+        });
+            // const tastes = ['酸', '甘', '苦', '辛', '咸'];
+            // const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
+            // const properties = ['温', '热', '寒', '凉'];
             
-            return herbs;
+            // const herbs = [];
+            // const herbNames = [
+            //     '人参', '黄芪', '当归', '川芎', '白芍', '熟地黄', '何首乌', '党参', '白术', '茯苓',
+            //     '陈皮', '半夏', '砂仁', '枳实', '木香', '厚朴', '黄连', '黄芩', '黄柏', '栀子',
+            //     '桂皮', '干姜', '附子', '丁香', '肉桂', '艾叶', '薄荷', '柴胡', '香附', '紫苏',
+            //     '菊花', '金银花', '连翘', '板蓝根', '蝉蜕', '牛蒡子', '桔梗', '甘草', '大黄', '芒硝'
+            // ];
+            
+            // for (let i = 0; i < herbNames.length; i++) {
+            //     herbs.push({
+            //         id: i,
+            //         name: herbNames[i],
+            //         frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
+            //         property: properties[Math.floor(Math.random() * properties.length)], // 药性
+            //         category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
+            //         taste: tastes[Math.floor(Math.random() * tastes.length)], // 药味
+            //         meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
+            //         function: ['补气', '活血', '清热', '祛风', '利水'][Math.floor(Math.random() * 5)] // 功效
+            //     });
+            // }
+            
+            // return herbs;
         }
 
         // 生成星云粒子
@@ -806,7 +833,10 @@
             const ctx = initConnectionsCanvas();
 
             // 初始化药材
-            initializeHerbs();
+            // initializeHerbs();
+            generateHerbalData().then(herbs => {
+                initializeHerbs(herbs);
+            })
             
             // 添加粒子动画
             function animateParticles() {

@@ -1,0 +1,386 @@
+[
+    {
+      "name": "甘草",
+      "taste": "甘",
+      "property": "平",
+      "category": "根部",
+      "meridian": "脾、胃、肺",
+      "function": "补气、润肺、解毒"
+    },
+    {
+      "name": "当归",
+      "taste": "甘",
+      "property": "温",
+      "category": "根部",
+      "meridian": "肝、心、脾",
+      "function": "补血、活血、调经"
+    },
+    {
+      "name": "茯苓",
+      "taste": "甘",
+      "property": "平",
+      "category": "根部",
+      "meridian": "脾、胃、心、肾",
+      "function": "利水渗湿、健脾安神"
+    },
+    {
+      "name": "人参",
+      "taste": "甘",
+      "property": "温",
+      "category": "根部",
+      "meridian": "脾、肺、心、肾",
+      "function": "大补元气、益脾肺"
+    },
+    {
+      "name": "川芎",
+      "taste": "辛",
+      "property": "温",
+      "category": "根部",
+      "meridian": "肝、心、膀胱",
+      "function": "活血行气、祛风止痛"
+    },
+    {
+      "name": "陈皮",
+      "taste": "辛",
+      "property": "温",
+      "category": "果实",
+      "meridian": "脾、胃、肺",
+      "function": "理气健脾、燥湿化痰"
+    },
+    {
+      "name": "防风",
+      "taste": "辛",
+      "property": "温",
+      "category": "根部",
+      "meridian": "膀胱、肝、脾",
+      "function": "解表祛风、止痛"
+    },
+    {
+      "name": "半夏",
+      "taste": "辛",
+      "property": "热",
+      "category": "根部",
+      "meridian": "脾、胃、肺",
+      "function": "燥湿化痰、止呕"
+    },
+    {
+      "name": "白芍",
+      "taste": "苦",
+      "property": "寒",
+      "category": "根部",
+      "meridian": "肝、脾",
+      "function": "养血调经、缓急止痛"
+    },
+    {
+      "name": "黄连",
+      "taste": "苦",
+      "property": "寒",
+      "category": "茎部",
+      "meridian": "心、脾、胃",
+      "function": "清热燥湿、泻火解毒"
+    },
+    {
+      "name": "附子",
+      "taste": "辛",
+      "property": "温",
+      "category": "根部",
+      "meridian": "肾、脾、心",
+      "function": "回阳救逆、温阳散寒"
+    },
+    {
+      "name": "黄芩",
+      "taste": "苦",
+      "property": "寒",
+      "category": "根部",
+      "meridian": "肺、胆、胃",
+      "function": "清热燥湿、泻火解毒"
+    },
+    {
+      "name": "木香",
+      "taste": "辛",
+      "property": "温",
+      "category": "茎部",
+      "meridian": "脾、胃",
+      "function": "行气止痛、健脾开胃"
+    },
+    {
+      "name": "地黄",
+      "taste": "甘",
+      "property": "凉",
+      "category": "根部",
+      "meridian": "心、肝、肾",
+      "function": "滋阴补血、清热"
+    },
+    {
+      "name": "大黄",
+      "taste": "苦",
+      "property": "寒",
+      "category": "根部",
+      "meridian": "大肠、胃",
+      "function": "泻火通便、解毒"
+    },
+    {
+      "name": "干姜",
+      "taste": "辛",
+      "property": "温",
+      "category": "根部",
+      "meridian": "脾、胃、心",
+      "function": "温中散寒、回阳救逆"
+    },
+    {
+      "name": "柴胡",
+      "taste": "苦",
+      "property": "平",
+      "category": "茎部",
+      "meridian": "肝、胆、脾",
+      "function": "疏肝解郁、调和表里"
+    },
+    {
+      "name": "桔梗",
+      "taste": "辛",
+      "property": "平",
+      "category": "根部",
+      "meridian": "肺",
+      "function": "宣肺利咽、排脓"
+    },
+    {
+      "name": "白芷",
+      "taste": "辛",
+      "property": "温",
+      "category": "根部",
+      "meridian": "肺、胃、肝",
+      "function": "祛风解表、通窍"
+    },
+    {
+      "name": "首乌藤",
+      "taste": "甘",
+      "property": "平",
+      "category": "茎部",
+      "meridian": "肝、肾",
+      "function": "补肝肾、益精血"
+    },
+    {
+      "name": "炒杜仲",
+      "taste": "苦",
+      "property": "温",
+      "category": "果实",
+      "meridian": "肝、肾",
+      "function": "补肝肾、强筋骨"
+    },
+    {
+      "name": "珍珠母",
+      "taste": "咸",
+      "property": "寒",
+      "category": "果实",
+      "meridian": "肝、肾",
+      "function": "安神、软坚散结"
+    },
+    {
+      "name": "炒枳实",
+      "taste": "苦",
+      "property": "寒",
+      "category": "果实",
+      "meridian": "脾、胃",
+      "function": "消食化积、通便"
+    },
+    {
+      "name": "炒枳壳",
+      "taste": "苦",
+      "property": "寒",
+      "category": "果实",
+      "meridian": "脾、胃",
+      "function": "疏肝解郁、行气"
+    },
+    {
+      "name": "炒麦芽",
+      "taste": "甘",
+      "property": "温",
+      "category": "种子",
+      "meridian": "脾、胃",
+      "function": "健脾消食、和胃"
+    },
+    {
+      "name": "炒白术",
+      "taste": "甘",
+      "property": "温",
+      "category": "根部",
+      "meridian": "脾、胃",
+      "function": "健脾益气、燥湿"
+    },
+    {
+      "name": "丹参",
+      "taste": "苦",
+      "property": "寒",
+      "category": "根部",
+      "meridian": "心、肝",
+      "function": "活血化瘀、调经"
+    },
+    {
+      "name": "生地黄",
+      "taste": "甘",
+      "property": "寒",
+      "category": "根部",
+      "meridian": "心、肝、肾",
+      "function": "清热凉血、养阴"
+    },
+    {
+      "name": "熟地黄",
+      "taste": "甘",
+      "property": "温",
+      "category": "根部",
+      "meridian": "肝、肾",
+      "function": "滋阴补肾、养血"
+    },
+    {
+      "name": "大血藤",
+      "taste": "辛",
+      "property": "寒",
+      "category": "茎部",
+      "meridian": "肝、肾",
+      "function": "活血祛瘀、清热解毒"
+    },
+    {
+      "name": "白花蛇舌草",
+      "taste": "苦",
+      "property": "寒",
+      "category": "全草",
+      "meridian": "心、肝、胃",
+      "function": "清热解毒、消肿"
+    },
+    {
+      "name": "白茯苓",
+      "taste": "甘",
+      "property": "平",
+      "category": "根部",
+      "meridian": "脾、胃、心、肾",
+      "function": "利水渗湿、健脾安神"
+    },
+    {
+      "name": "麦冬",
+      "taste": "甘",
+      "property": "寒",
+      "category": "茎部",
+      "meridian": "心、肺、胃",
+      "function": "养阴润肺、益胃生津"
+    },
+    {
+      "name": "制香附",
+      "taste": "辛",
+      "property": "平",
+      "category": "茎部",
+      "meridian": "肝、脾、三焦",
+      "function": "疏肝解郁、调经止痛"
+    },
+    {
+      "name": "枸杞子",
+      "taste": "甘",
+      "property": "平",
+      "category": "果实",
+      "meridian": "肝、肾",
+      "function": "滋补肝肾、益精明目"
+    },
+    {
+      "name": "黄芪",
+      "taste": "甘",
+      "property": "温",
+      "category": "根部",
+      "meridian": "脾、肺",
+      "function": "补气升阳、益卫固表"
+    },
+    {
+      "name": "党参",
+      "taste": "甘",
+      "property": "平",
+      "category": "根部",
+      "meridian": "脾、肺",
+      "function": "补中益气、健脾益肺"
+    },
+    {
+      "name": "山药",
+      "taste": "甘",
+      "property": "平",
+      "category": "茎部",
+      "meridian": "脾、肺、肾",
+      "function": "健脾益肺、补肾涩精"
+    },
+    {
+      "name": "红枣",
+      "taste": "甘",
+      "property": "温",
+      "category": "果实",
+      "meridian": "脾、胃、心",
+      "function": "补中益气、养血安神"
+    },
+    {
+      "name": "薏苡仁",
+      "taste": "甘",
+      "property": "凉",
+      "category": "果实",
+      "meridian": "脾、胃、肺",
+      "function": "利水渗湿、健脾除痹"
+    },
+    {
+      "name": "山楂",
+      "taste": "酸",
+      "property": "温",
+      "category": "果实",
+      "meridian": "脾、胃、肝",
+      "function": "消食健胃、行气散瘀"
+    },
+    {
+      "name": "生姜",
+      "taste": "辛",
+      "property": "温",
+      "category": "茎部",
+      "meridian": "肺、胃、脾",
+      "function": "解表散寒、温中止呕"
+    },
+    {
+      "name": "薄荷",
+      "taste": "辛",
+      "property": "凉",
+      "category": "叶部",
+      "meridian": "肺、肝",
+      "function": "疏散风热、清头目"
+    },
+    {
+      "name": "菊花",
+      "taste": "甘",
+      "property": "凉",
+      "category": "花部",
+      "meridian": "肺、肝",
+      "function": "疏散风热、平肝明目"
+    },
+    {
+      "name": "石斛",
+      "taste": "甘",
+      "property": "寒",
+      "category": "茎部",
+      "meridian": "胃、肾",
+      "function": "益胃生津、滋阴清热"
+    },
+    {
+      "name": "金银花",
+      "taste": "甘",
+      "property": "寒",
+      "category": "花部",
+      "meridian": "肺、胃",
+      "function": "清热解毒、疏散风热"
+    },
+    {
+      "name": "牛蒡子",
+      "taste": "辛",
+      "property": "寒",
+      "category": "果实",
+      "meridian": "肺、胃",
+      "function": "清热解毒、利湿退黄"
+    },
+    {
+      "name": "桑叶",
+      "taste": "甘",
+      "property": "凉",
+      "category":"叶部",
+      "meridian": "肺、肝",
+      "function": "疏散风热、清肺润燥、清肝明目"
+    }
+]
