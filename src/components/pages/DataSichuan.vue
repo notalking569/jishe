@@ -20,13 +20,13 @@
             <img :src="currentImage" alt="气候或地理特点" class="climate-map" style="width: 80%; height: 180px;" />
           </div>
           <div class="text-container">
-            <p v-if="currentImage === '/img/doctors/qihou.png'">四川的气候特征对川人体质有重要影响，湿润的环境导致川人体质偏湿。四川的地形复杂，气候湿润，降水量充沛，温暖的气候助长了湿气的积聚。</p>
-            <p v-if="currentImage === '/img/doctors/xueji.png'">四川盆地的湿气通过空气和水分影响着人们的体质，特别是在湿润的春夏季节，湿气更加明显。</p>
+            <p v-if="isDefault === true">四川的气候特征对川人体质有重要影响，湿润的环境导致川人体质偏湿。四川的地形复杂，气候湿润，降水量充沛，温暖的气候助长了湿气的积聚。</p>
+            <p v-if="isDefault === false">四川盆地的湿气通过空气和水分影响着人们的体质，特别是在湿润的春夏季节，湿气更加明显。</p>
           </div>
           <!-- 气候特点和地理特点按钮 -->
           <div class="buttons">
-            <button @click="showImage('climate')">气候特点</button>
-            <button @click="showImage('geography')">地理特点</button>
+            <button @click="change(1)">气候特点</button>
+            <button @click="change(2)">地理特点</button>
           </div>
         </div>
 
@@ -234,6 +234,15 @@ function selectCase(idx) {
   currentImageIndex.value = 0;
 }
 
+// 切换文字
+function change(num) {
+  if (num === 1) {
+    isDefault.value = true
+  } else {
+    isDefault.value = false
+  }
+}
+
 // 走马灯上一张
 function prevImage() {
   const imgs = caseImages[selectedCase.value];
@@ -251,6 +260,7 @@ function nextImage() {
   const currentDiagnosis = ref('望诊'); // 默认显示望诊
   const diagnosisInfo = ref('');
   const currentImage = ref('/img/doctors/qihou.png'); // 默认气候图片
+  const isDefault = ref(true)
   
   // 四诊诊断数据
   const diagnosisData = {

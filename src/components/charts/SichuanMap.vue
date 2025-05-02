@@ -43,7 +43,8 @@
     data() {
       return {
         chart: null,
-        activeMarkers: []
+        activeMarkers: [],
+        tcmData: []
       }
     },
     mounted() {
@@ -165,6 +166,8 @@
         // 清除现有标记
         this.activeMarkers.forEach(marker => marker.remove())
         this.activeMarkers = []
+
+        if (!Array.isArray(this.tcmData)) return
         
         // 创建新标记
         this.tcmData.forEach(item => {
