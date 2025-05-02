@@ -282,11 +282,11 @@
         }
         
         /* 药性对应的颜色 */
-        .property-寒 { background-color: #4286f4; }
-        .property-凉 { background-color: #41c7c7; }
-        .property-平 { background-color: #7fca9b; }
-        .property-温 { background-color: #f4a742; }
-        .property-热 { background-color: #e94560; }
+        .taste-酸 { background-color: #4286f4; }   /* 酸味 */
+        .taste-甘 { background-color: #41c7c7; }   /* 甘味 */
+        .taste-苦 { background-color: #7fca9b; }   /* 苦味 */
+        .taste-辛 { background-color: #f4a742; }   /* 辛味 */
+        .taste-咸 { background-color: #e94560; }   /* 咸味 */
         
         @media (max-width: 768px) {
             .content {
@@ -349,27 +349,27 @@
             <div class="control-panel">
                 <div class="control-section">
                     <h3 class="control-title">星云图说明</h3>
-                    <p>本图呈现《本草纲目》中的核心药材：</p>
+                    <p> 巴蜀地区常用药材：</p>
                     <div class="legend">
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #4286f4;"></div>
-                            <span>寒性药材</span>
+                            <span>酸味</span>
                         </div>
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #41c7c7;"></div>
-                            <span>凉性药材</span>
+                            <span>甘味</span>
                         </div>
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #7fca9b;"></div>
-                            <span>平性药材</span>
+                            <span>苦味</span>
                         </div>
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #f4a742;"></div>
-                            <span>温性药材</span>
+                            <span>辛味</span>
                         </div>
                         <div class="legend-item">
                             <div class="legend-color" style="background-color: #e94560;"></div>
-                            <span>热性药材</span>
+                            <span>咸味</span>
                         </div>
                     </div>
                 </div>
@@ -386,14 +386,24 @@
                 <div class="control-section">
                     <h3 class="control-title">药材筛选</h3>
                     <div class="filter-container">
+                        <label for="taste-filter">按药味筛选：</label>
+                        <select id="taste-filter" class="filter-select">
+                            <option value="all">全部</option>
+                            <option value="酸">酸味</option>
+                            <option value="甘">甘味</option>
+                            <option value="苦">苦味</option>
+                            <option value="辛">辛味</option>
+                            <option value="咸">咸味</option>
+                        </select>
+                    </div>
+                    <div class="filter-container">
                         <label for="property-filter">按药性筛选：</label>
                         <select id="property-filter" class="filter-select">
                             <option value="all">全部</option>
-                            <option value="寒">寒性</option>
-                            <option value="凉">凉性</option>
-                            <option value="平">平性</option>
                             <option value="温">温性</option>
                             <option value="热">热性</option>
+                            <option value="寒">寒性</option>
+                            <option value="凉">凉性</option>
                         </select>
                     </div>
                     <div class="filter-container">
@@ -476,43 +486,35 @@
                 const size = 20 + herb.frequency / 5; // 药用频率映射到元素大小
                 const position = categoryPositions[herb.category]; // 基于入药部位的位置
                 
-                // 添加位置偏移，使同一类别的药材不重叠
                 const offsetAngle = Math.random() * Math.PI * 2;
                 const offsetDistance = (Math.random() * 0.5 + 0.5) * 20; // 50% 到 100% 的基础偏移
                 const offsetX = Math.cos(offsetAngle) * offsetDistance;
                 const offsetY = Math.sin(offsetAngle) * offsetDistance;
                 
-                // 创建药材元素
                 const herbElement = document.createElement('div');
-                herbElement.className = `herb-item property-${herb.property}`;
+                herbElement.className = `herb-item taste-${herb.taste}`;
                 herbElement.style.width = `${size}px`;
                 herbElement.style.height = `${size}px`;
                 
-                // 设置位置
                 const top = parseFloat(position.top) + offsetY;
                 const left = parseFloat(position.left) + offsetX;
                 herbElement.style.position = 'absolute';
                 herbElement.style.top = `calc(${top}% - ${size/2}px)`;
                 herbElement.style.left = `calc(${left}% - ${size/2}px)`;
                 
-                // 添加药材名称
                 const nameElement = document.createElement('div');
                 nameElement.className = 'herb-name';
                 nameElement.textContent = herb.name;
                 herbElement.appendChild(nameElement);
                 
-                // 添加数据属性，用于筛选和连线
                 herbElement.dataset.property = herb.property;
                 herbElement.dataset.category = herb.category;
                 herbElement.dataset.meridian = herb.meridian;
                 herbElement.dataset.taste = herb.taste;
                 
-                // 添加基础发光效果
                 createGlowEffect(herbElement, 0.5);
                 
-                // 添加鼠标悬停事件
                 herbElement.addEventListener('mouseover', function(e) {
-                    // 更新提示框内容
                     tooltipTitle.textContent = herb.name;
                     tooltipProperty.textContent = herb.property;
                     tooltipTaste.textContent = herb.taste;
@@ -580,8 +582,9 @@
 
         // 全国药材数据
         function generateAllHerbalData() {
-            const properties = ['温', '热', '寒', '凉', '平'];
+            const tastes = ['酸', '甘', '苦', '辛', '咸'];
             const categories = ['根部', '茎部', '叶部', '花部', '果实', '种子', '全草'];
+            const properties = ['温', '热', '寒', '凉'];
             
             const herbs = [];
             const herbNames = [
@@ -598,7 +601,7 @@
                     frequency: Math.floor(Math.random() * 90) + 10, // 药用频率 10-100
                     property: properties[Math.floor(Math.random() * properties.length)], // 药性
                     category: categories[Math.floor(Math.random() * categories.length)], // 入药部位
-                    taste: ['甘', '苦', '辛', '酸', '咸'][Math.floor(Math.random() * 5)], // 药味
+                    taste: tastes[Math.floor(Math.random() * tastes.length)], // 药味
                     meridian: ['肺', '心', '脾', '肝', '肾'][Math.floor(Math.random() * 5)], // 归经
                     function: ['补气', '活血', '清热', '祛风', '利水'][Math.floor(Math.random() * 5)] // 功效
                 });
@@ -779,15 +782,15 @@
 
         // 创建发光效果
         function createGlowEffect(herbElement, intensity = 1) {
-            const property = herbElement.dataset.property;
+            const taste = herbElement.dataset.taste;
             let color;
             
-            switch (property) {
-                case '寒': color = '#4286f4'; break;
-                case '凉': color = '#41c7c7'; break;
-                case '平': color = '#7fca9b'; break;
-                case '温': color = '#f4a742'; break;
-                case '热': color = '#e94560'; break;
+            switch (taste) {
+                case '酸': color = '#4286f4'; break;
+                case '甘': color = '#41c7c7'; break;
+                case '苦': color = '#7fca9b'; break;
+                case '辛': color = '#f4a742'; break;
+                case '咸': color = '#e94560'; break;
                 default: color = '#ffffff';
             }
             
@@ -831,13 +834,20 @@
             function applyFilters() {
                 const propertyFilter = document.getElementById('property-filter').value;
                 const categoryFilter = document.getElementById('category-filter').value;
+                const tasteFilter = document.getElementById('taste-filter').value;
                 
                 document.querySelectorAll('.herb-item').forEach(item => {
+                    const taste = item.dataset.taste;
                     const property = item.dataset.property;
                     const category = item.dataset.category;
                     
                     let shouldShow = true;
                     
+
+                    if (tasteFilter !== 'all' && taste !== tasteFilter) {
+                        shouldShow = false;
+                    }
+
                     if (propertyFilter !== 'all' && property !== propertyFilter) {
                         shouldShow = false;
                     }
@@ -855,6 +865,7 @@
             }
             
             // 添加过滤器事件监听
+            document.getElementById('taste-filter').addEventListener('change', applyFilters);
             document.getElementById('property-filter').addEventListener('change', applyFilters);
             document.getElementById('category-filter').addEventListener('change', applyFilters);
         });
