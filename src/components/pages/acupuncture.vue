@@ -313,7 +313,17 @@ const threeInit = () => {
 
     // 加载完成后隐藏加载界面并显示模型
     if (loading.value === 3) {
-      document.querySelector(".sm").style.display = "none";
+      const smElement = document.querySelector(".sm");
+      const innerElement = document.querySelector(".inner");
+      
+      if (smElement) {
+        smElement.style.display = "none";
+      }
+      
+      if (innerElement) {
+        innerElement.style.width = (loading.value / 3) * 100 + "%";
+      }
+
       if (clipping.value < 24) {
         setTimeout(() => {
           clipping.value += 0.2;
@@ -321,10 +331,6 @@ const threeInit = () => {
         }, 300);
       }
     }
-
-    // 更新加载进度条
-    document.querySelector(".inner").style.width =
-      (loading.value / 3) * 100 + "%";
 
     controls.update();
 

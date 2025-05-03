@@ -64,7 +64,7 @@
       },
       loadMapData() {
         // 地图审阅号 GS（2024）0650号
-        fetch('./src/assets/sichuanpro.geojson')
+        fetch('/data/sichuanpro.geojson')
           .then(response => response.json())
           .then(geoJson => {
             echarts.registerMap('Sichuan', geoJson)

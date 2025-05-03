@@ -583,7 +583,7 @@
 
         // 全国药材数据
         function generateAllHerbalData() {
-            return fetch('src/assets/data_zcy.json')
+            return fetch('./data/data_zcy.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('无法加载 data_zcy.json 文件');
