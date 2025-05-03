@@ -475,7 +475,7 @@ const handleImageError = (event) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('/img/doctors/herbs/bg.png') no-repeat center center fixed; /* 设置背景图片 */
+  background: url('img/doctors/herbs/bg.png') no-repeat center center fixed; /* 设置背景图片 */
   background-size: cover; /* 确保背景图片覆盖整个容器 */
   overflow: hidden;
   z-index: 0;
