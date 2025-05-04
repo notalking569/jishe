@@ -125,15 +125,17 @@ const dataSourceButtonText = computed(() => {
 // 默认数据 - 使用原始数据，不要响应式转换这些源数据
 const defaultDataSource = {
   circlePackData: [
-    { name: '战国', value: 247, color: '#891515' },
-    { name: '秦汉', value: 365 },
-    { name: '三国', value: 730 },
-    { name: '晋', value: 800 },
-    { name: '隋唐', value: 850 },
-    { name: '宋元', value: 1748 },
-    { name: '明', value: 1892 },
-    { name: '清', value: 2600 }
-  ],
+    { name: '川药', value: 50, color: '#891515' },
+    { name: '北药', value: 15 },
+    { name: '南药', value: 25 },
+    { name: '关药', value: 10 },
+    { name: '秦药', value: 15 },
+    { name: '浙药', value: 15 },
+    { name: '淮药', value: 10 },
+    { name: '维药', value: 1 },
+    { name: '蒙药', value: 7 },
+    { name: '宁夏药', value: 1 }
+],
   herbTypes: [
     { name: '清热药（《伤寒论》）', value: 81 },
     { name: '补虚药（《金匮要略》）', value: 46 },

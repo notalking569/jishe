@@ -4,177 +4,186 @@ import { VueUiCirclePack } from "vue-data-ui";
 import "vue-data-ui/style.css"; // If you are using multiple components, place styles import in your main
 
 const config = ref({
-        theme: '',
-        customPalette: [],
-        userOptions: {
-            show: true,
-            showOnChartHover: false,
-            keepStateOnChartLeave: true,
-            position: 'right',
-            buttons: {
-                tooltip: false,
-                pdf: true,
-                csv: true,
-                img: true,
-                table: true,
-                labels: false,
-                fullscreen: true,
-                sort: false,
-                stack: false,
-                animation: false,
-                annotator: true
-            },
-            buttonTitles: {
-                open: 'Open options',
-                close: 'Close options',
-                pdf: 'Download PDF',
-                csv: 'Download CSV',
-                img: 'Download PNG',
-                table: 'Toggle table',
-                fullscreen: 'Toggle fullscreen',
-                annotator: 'Toggle annotator'
-            }
+    theme: '',
+    customPalette: [],
+    userOptions: {
+        show: true,
+        showOnChartHover: false,
+        keepStateOnChartLeave: true,
+        position: 'right',
+        buttons: {
+            tooltip: false,
+            pdf: true,
+            csv: true,
+            img: true,
+            table: true,
+            labels: false,
+            fullscreen: true,
+            sort: false,
+            stack: false,
+            animation: false,
+            annotator: true
         },
-        table: {
-            show: false,
-            responsiveBreakpoint: 400,
-            th: {
-                backgroundColor: '#FFFFFFff',
-                color: '#111111ff',
-                outline: 'none'
-            },
-            td: {
-                backgroundColor: '#FFFFFFff',
-                color: '#111111ff',
-                outline: 'none'
-            },
-            columnNames: {
-                datapoint: 'Datapoint',
-                value: 'Value'
-            }
+        buttonTitles: {
+            open: 'Open options',
+            close: 'Close options',
+            pdf: 'Download PDF',
+            csv: 'Download CSV',
+            img: 'Download PNG',
+            table: 'Toggle table',
+            fullscreen: 'Toggle fullscreen',
+            annotator: 'Toggle annotator'
+        }
+    },
+    table: {
+        show: false,
+        responsiveBreakpoint: 400,
+        th: {
+            backgroundColor: '#FFFFFFff',
+            color: '#111111ff',
+            outline: 'none'
         },
-        style: {
-            fontFamily: 'inherit',
-            chart: {
-                backgroundColor: '#222222',
+        td: {
+            backgroundColor: '#FFFFFFff',
+            color: '#111111ff',
+            outline: 'none'
+        },
+        columnNames: {
+            datapoint: 'Datapoint',
+            value: 'Value'
+        }
+    },
+    style: {
+        fontFamily: 'inherit',
+        chart: {
+            backgroundColor: '#222222',
+            color: '#222222ff',
+            title: {
+                text: '中药材产地分类统计',
                 color: '#222222ff',
-                // height: 800, // 增加高度
-                title: {
-                    text: 'Title',
+                fontSize: 20,
+                bold: true,
+                textAlign: 'center',
+                paddingLeft: 0,
+                paddingRight: 0,
+                subtitle: {
                     color: '#222222ff',
-                    fontSize: 20,
-                    bold: true,
-                    textAlign: 'center',
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    subtitle: {
-                        color: '#222222ff',
-                        text: 'Subtitle',
-                        fontSize: 16,
-                        bold: false
+                    text: '按产地分类统计中药材数量',
+                    fontSize: 16,
+                    bold: false
+                }
+            },
+            circles: {
+                stroke: '#FFFFFFff',
+                strokeWidth: 1,
+                gradient: {
+                    show: true,
+                    intensity: 40
+                },
+                labels: {
+                    name: {
+                        fontSizeRatio: 1,
+                        show: true,
+                        bold: false,
+                        offsetY: 0,
+                        color: 'auto'
+                    },
+                    value: {
+                        fontSizeRatio: 1,
+                        show: true,
+                        color: 'auto',
+                        rounding: 0,
+                        prefix: '',
+                        suffix: '',
+                        formatter: null,
+                        bold: false,
+                        offsetY: 0
                     }
                 },
-                circles: {
-                    stroke: '#FFFFFFff',
-                    strokeWidth: 1,
-                    gradient: {
-                        show: true,
-                        intensity: 40
-                    },
-                    labels: {
+                zoom: {
+                    show: true,
+                    shadowForce: 1,
+                    opacity: 0.8,
+                    animationFrameMs: 200,
+                    zoomRatio: 1,
+                    label: {
                         name: {
-                            fontSizeRatio: 1,
-                            show: true,
+                            fontSize: 14,
                             bold: false,
                             offsetY: 0,
                             color: 'auto'
                         },
                         value: {
-                            fontSizeRatio: 1,
-                            show: true,
-                            color: 'auto',
+                            fontSize: 14,
+                            bold: false,
+                            offsetY: 0,
                             rounding: 0,
                             prefix: '',
                             suffix: '',
                             formatter: null,
-                            bold: false,
-                            offsetY: 0
-                        }
-                    },
-                    zoom: {
-                        show: true,
-                        shadowForce: 1,
-                        opacity: 0.8,
-                        animationFrameMs: 200,
-                        zoomRatio: 1,
-                        label: {
-                            name: {
-                                fontSize: 14,
-                                bold: false,
-                                offsetY: 0,
-                                color: 'auto'
-                            },
-                            value: {
-                                fontSize: 14,
-                                bold: false,
-                                offsetY: 0,
-                                rounding: 0,
-                                prefix: '',
-                                suffix: '',
-                                formatter: null,
-                                color: 'auto'
-                            }
+                            color: 'auto'
                         }
                     }
                 }
             }
         }
-    });
+    }
+});
 
 const dataset = ref([
     {
-        name: '战国',
-        value: 247,
+        name: '川药',
+        value: 50,
         color: '#891515'
     },
     {
-        name: '秦汉',
-        value: 365,
+        name: '北药',
+        value: 15,
         color: null
     },
     {
-        name: '三国',
-        value: 730,
+        name: '南药',
+        value: 25,
         color: null
     },
     {
-        name: '晋',
-        value: 800,
+        name: '关药',
+        value: 10,
         color: null
     },
     {
-        name: '隋唐',
-        value: 850,
+        name: '秦药',
+        value: 15,
         color: null
     },
     {
-        name: '宋元',
-        value: 1748,
+        name: '浙药',
+        value: 15,
         color: null
     },
     {
-        name: '明',
-        value: 1892,
+        name: '淮药',
+        value: 10,
         color: null
     },
     {
-        name: '清',
-        value: 2600,
+        name: '维药',
+        value: 1,
+        color: null
+    },
+    {
+        name: '蒙药',
+        value: 7,
+        color: null
+    },
+    {
+        name: '宁夏药',
+        value: 1,
         color: null
     }
 ]);
-
 </script>
+
 <template>
     <!-- Using a wrapper is optional -->
     <div style="width: 100%; height: 100%;">
