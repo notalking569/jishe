@@ -243,7 +243,7 @@
    .wordcloud-box,
    .heatmap-box {
      background: #111;
-     height: 200px;
+     height: 400px;
      border: 1px dashed #0ff;
      display: flex;
      align-items: center;
@@ -339,7 +339,7 @@
 }
 .chart-border {
   width: 100%;
-  height: 800px;
+  height: 850px;
   background: #111;
   border: 1px dashed #0ff;
 }
