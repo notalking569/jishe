@@ -16,38 +16,31 @@
       <div class="nav-arrow down" id="down-btn" @click="slideToNext">▼</div>
       <div id="content">
         <div class="card">
-          <div class="card-time">先秦时期</div>
+          <div class="card-time">秦汉时期</div>
           <div class="card-title">早期针灸起源</div>
           <div class="card-passage">
-            巴蜀地区(今四川)的"巫医文化"开始萌芽，出现了原始的砭石疗法。
+            巴蜀地区(今四川)的"巫医文化"开始萌芽，出现了针灸铜人之先声——经脉漆人，以及最早的针灸专著《针经》。
           </div>
         </div>
         <div class="card">
-          <div class="card-time">汉唐时期</div>
+          <div class="card-time">隋唐时期</div>
           <div class="card-title">针灸理论奠基</div>
           <div class="card-passage">
-            《黄帝内经》形成，巴蜀针灸开始形成独特流派，融合道家养生理念，形成了"动静结合"的针法特色。
+            巴蜀针灸开始形成独特流派，融合道家养生理念，形成了"动静结合"的针法特色。
           </div>
         </div>
         <div class="card">
           <div class="card-time">宋元时期</div>
           <div class="card-title">川派针灸成熟</div>
           <div class="card-passage">
-            川派针灸逐渐成熟，出现铜人针灸经络图，巴蜀医家发展出"温针法"，适应川西高原与盆地湿热环境。
+            川派针灸逐渐成熟，出现铜人针灸经络图，巴蜀医家改进"温针法"，适应川蜀盆地湿热环境。
           </div>
         </div>
         <div class="card">
           <div class="card-time">明清时期</div>
           <div class="card-title">黄金发展时期</div>
           <div class="card-passage">
-            川派针灸进入黄金时期，杨继洲的《针灸大成》集大成，川派医家发展"循经导引法"，形成独特风格。
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-time">近现代</div>
-          <div class="card-title">现代针灸创新</div>
-          <div class="card-passage">
-            成都中医药大学针灸学科形成，川派针灸融合现代医学，形成针灸麻醉等创新技术，走向世界。
+            川派针灸进入黄金时期，王锡鑫的《针灸便览》以图解和歌诀形式介绍针法要领，通俗易懂，内容完整。
           </div>
         </div>
       </div>
@@ -73,7 +66,7 @@ const router = useRouter();
 // 定义变量
 let offset = 0;
 let maxOffset = 0;
-let minOffset = -4; // 一共5个卡片，从0开始，所以最小偏移为-4
+let minOffset = -3; // 一共5个卡片，从0开始，所以最小偏移为-4
 
 // 向前切换卡片
 function slideToPrev() {
@@ -108,8 +101,8 @@ function slideToNext() {
 
 // 旋转时钟表盘
 function clockRotate(index) {
-  // 根据当前索引计算角度，从顶部12点位置开始（-90度），每个时期间隔72度
-  const degree = -90 + (Math.abs(index) * 72);
+  // 根据当前索引计算角度，从顶部12点位置开始（-90度），每个时期间隔90度
+  const degree = -90 + (Math.abs(index) * 90);
   console.log("index = ", index, "degree = ", degree);
 
   const clock = document.querySelector("#clock-table");
@@ -177,7 +170,7 @@ function updateCurrentPeriod() {
 
   // 根据当前offset计算当前时期索引
   // offset为0时是先秦时期（第一个时期）
-  // offset为-4时是近现代（最后一个时期）
+  // offset为-3时是清代（最后一个时期）
   const currentPeriodIndex = Math.abs(offset);
 
   // 为当前时期添加current-period类
@@ -196,19 +189,19 @@ onMounted(() => {
   // 设定历史时期，按照历史顺序排列（从先秦到近现代）
   const periods = ["先秦时期", "汉唐时期", "宋元时期", "明清时期", "近现代"];
 
-  // 均匀分布时钟刻度：计算角度间隔（360度/5个时期 = 72度每个）
-  const degreeInterval = 72;
+  // 均匀分布时钟刻度：计算角度间隔（360度/4个时期 = 90度每个）
+  const degreeInterval = 90;
 
   // 绘制时钟刻度和标签
-  for (let i = 0; i < 5; i++) {
-    // 主刻度，间隔72度，从顶部12点位置开始（-90度），顺时针旋转
+  for (let i = 0; i < 4; i++) {
+    // 主刻度，间隔90度，从顶部12点位置开始（-90度），顺时针旋转
     const degree = -90 + (i * degreeInterval);
 
     // 添加主刻度和时期标签
     addThickClockScale(degree, periods[i]);
 
     // 添加小刻度（每个主刻度之间添加4个小刻度）
-    for (let j = 1; j < 5; j++) {
+    for (let j = 1; j < 4; j++) {
       addClockScale(degree + j * (degreeInterval / 5));
     }
   }
