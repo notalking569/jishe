@@ -40,12 +40,12 @@ const config = ref({
         responsiveBreakpoint: 400,
         th: {
             backgroundColor: '#FFFFFFff',
-            color: '#111111ff',
+            color: '#222222ff',
             outline: 'none'
         },
         td: {
             backgroundColor: '#FFFFFFff',
-            color: '#111111ff',
+            color: '#222222ff',
             outline: 'none'
         },
         columnNames: {

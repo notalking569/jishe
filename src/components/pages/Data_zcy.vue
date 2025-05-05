@@ -215,7 +215,7 @@ const toggleDataSource = () => {
     Object.keys(currentData).forEach(key => {
       currentData[key] = JSON.parse(JSON.stringify(defaultDataSource[key]));
     });
-    config.value.style.chart.title.text = '各朝代中药记载数';
+    config.value.style.chart.title.text = '各地药材分布数量';
   } else {
     // 如果当前是全国数据，切换到川域流派数据
     Object.keys(currentData).forEach(key => {
@@ -247,10 +247,10 @@ const config = ref({
 style: {
   fontFamily: 'inherit',
   chart: {
-    backgroundColor: '#111111ff',
+    backgroundColor: '#222222ff',
     color: '#111111ff',
     title: {
-      text: '各朝代中药记载数',
+      text: '各地道地药材分布数量',
       color: '#00ffff',
       //subtitle: { text: 'CirclePack 示例' }
     },
@@ -470,8 +470,8 @@ table th, table td {
 /* 饼图区域 */
 .charts-section {
   display: flex;
-  height: 400px;
-  gap: 10px;
+  height: 450px;
+  gap: 5px;
 }
 
 .chart-panel {
