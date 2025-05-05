@@ -111,7 +111,7 @@ const config = ref({
                         hollow: {
                             show: true,
                             total: {
-                                show: true,
+                                show: false,
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
@@ -129,7 +129,7 @@ const config = ref({
                                 }
                             },
                             average: {
-                                show: true,
+                                show: false,
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
@@ -212,35 +212,35 @@ const defaultDataset = [
     {
         name: '苦味',
         values: [
-            194
+            102
         ],
         color: '#be0909'
     },
     {
         name: '甘味',
         values: [
-            174
+            98
         ],
         color: '#6f0476'
     },
     {
         name: '辛味',
         values: [
-            158
+            86
         ],
         color: '#9d4d06'
     },
     {
         name: '酸味',
         values: [
-            28
+            41
         ],
         color: '#027e46'
     },
     {
         name: '咸味',
         values: [
-            41
+            38
         ],
         color: '#d8d118'
     }

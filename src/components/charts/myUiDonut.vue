@@ -112,7 +112,7 @@ const config = ref({
                         hollow: {
                             show: true,
                             total: {
-                                show: true,
+                                show: false,
                                 bold: false,
                                 fontSize: 18,
                                 color: '#AAAAAAff',
@@ -130,7 +130,7 @@ const config = ref({
                                 }
                             },
                             average: {
-                                show: true,
+                                show: false,
                                 bold: false,
                                 fontSize: 18,
                                 color: '#FFFFFFff',
@@ -212,47 +212,36 @@ const config = ref({
 const defaultDataset = [
     {
         name: '肝经',
-        values: [
-            650
-        ],
+        values: [72],
         color: '#be0909'
     },
     {
         name: '脾经',
-        values: [
-            520
-        ],
+        values: [68],
         color: '#6f0476'
     },
     {
         name: '肺经',
-        values: [
-            520
-        ],
+        values: [61],
         color: '#9d4d06'
     },
     {
         name: '心经',
-        values: [
-            390
-        ],
+        values: [58],
         color: '#027e46'
     },
     {
         name: '肾经',
-        values: [
-            390
-        ],
+        values: [54],
         color: '#d8d118'
     },
     {
         name: '其他经络',
-        values: [
-            130
-        ],
+        values: [52],
         color: '#e87c17'
     }
 ];
+
 
 // Sichuan-Chongqing dataset
 const sichuanDataset = [
