@@ -69,21 +69,6 @@ const config = ref({
                     color: '#1A1A1Aff',
                     usePalette: true
                 },
-                title: {
-                    text: '产地分布',
-                    color: '#00ffff',
-                    fontSize: 17,
-                    bold: true,
-                    textAlign: 'center',
-                    paddingLeft: 0,
-                    paddingRight: 0
-                    //subtitle: {
-                    //    color: '#CCCCCCff',
-                    //    text: 'Subtitle',
-                    //    fontSize: 16,
-                    //    bold: false
-                    //}
-                },
                 tooltip: {
                     show: true,
                     color: '#1A1A1Aff',
